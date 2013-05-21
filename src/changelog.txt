@@ -1,0 +1,53 @@
+Media Cataloguer RC15
+--------------------
+
+- add: UTF-8 SubRip subtitle files without BOM are fixed to include it so
+       mkvmerge does not double encode them assuming incorrectly they are
+       encoded in ANSI ASCII
+- fix: now the application version appears correctly on the MD5 file generated
+       by the Cataloguer application
+
+Media Cataloguer RC14
+--------------------
+
+- fix: now the application works under JRE 1.7 Update 21 after changes done to
+       Runtime.exec
+
+Media Cataloguer RC13
+--------------------
+
+- add: mkvpropedit capabilities to improve edition performance when possible
+
+Media Cataloguer RC12
+--------------------
+
+- add: multiple directories cataloging
+
+Media Cataloguer RC11
+--------------------
+
+- add: extra 8 blank spaces before info fields colon to follow MediaInfo
+       template changes
+- fix: now reverse mode extracts info fields by finding out the position of the
+       semicolon character instead of assuming a fixed number of blank spaces
+
+Media Cataloguer RC10
+--------------------
+
+- add: reverse mode added
+
+Media Cataloguer RC9
+--------------------
+
+- add: Media Info only argument to the command line
+
+Media Cataloguer RC8
+--------------------
+
+- add: distinguish movies from TV series based on the filename
+- add: this changelog file
+
+Media Cataloguer RC7
+--------------------
+
+- add: new release info field, 'ripper'
