@@ -56,12 +56,10 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
         command.append(SET_OPTION);
         command.append(SPACE);
         command.append(DOUBLE_QUOTES).append(TITLE_PROPERTY).append(EQUALS_SIGN).append(title).append(DOUBLE_QUOTES);
-        command.append(SPACE);
-        for (int i = 0; i < trackEditDescriptions.length - 1; i++) {
-            command.append(trackEditDescriptions[i]);
+        for (String description : trackEditDescriptions) {
             command.append(SPACE);
+            command.append(description);
         }
-        command.append(trackEditDescriptions[trackEditDescriptions.length - 1]);
 
         return command.toString();
     }

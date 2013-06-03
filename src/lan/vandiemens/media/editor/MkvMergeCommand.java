@@ -232,7 +232,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         description.append(SPACE);
         description.append(DOUBLE_QUOTES).append(LEFT_PARENTHESIS).append(DOUBLE_QUOTES);
         description.append(SPACE);
-        description.append(DOUBLE_QUOTES).append(subtitleFile.getFile().getAbsolutePath()).append(DOUBLE_QUOTES);
+        description.append(DOUBLE_QUOTES).append(subtitleFile.getAbsolutePath()).append(DOUBLE_QUOTES);
         description.append(SPACE);
         description.append(DOUBLE_QUOTES).append(RIGHT_PARENTHESIS).append(DOUBLE_QUOTES);
 

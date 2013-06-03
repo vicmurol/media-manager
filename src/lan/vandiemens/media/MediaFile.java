@@ -85,7 +85,7 @@ public class MediaFile {
 
     public void addSubtitle(SubtitleFile subtitleFile) {
         addedSubtitles.add(subtitleFile);
-        System.out.println("Subtitle \"" + subtitleFile.getFile().getName() + "\" mapped to media container \"" + file.getName() + "\"");
+        System.out.println("Subtitle \"" + subtitleFile.getName() + "\" mapped to media container \"" + file.getName() + "\"");
     }
 
     public SubtitleFile[] getAddedSubtitles() {
@@ -137,7 +137,7 @@ public class MediaFile {
             subtitleFile = addedSubtitles.get(i);
             if (info.hasSubtitle(subtitleFile.getLanguage(), subtitleFile.getSubType())) {
                 addedSubtitles.remove(i);
-                System.out.println("Previously added subtitle file " + subtitleFile.getFile().getName() + " disabled: the media container has equivalent subtitles");
+                System.out.println("Previously added subtitle file " + subtitleFile.getName() + " disabled: the media container has equivalent subtitles");
             }
         }
     }

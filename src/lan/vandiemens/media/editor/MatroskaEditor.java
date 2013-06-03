@@ -10,6 +10,7 @@ import lan.vandiemens.media.MediaFile;
 import lan.vandiemens.media.SubtitleFile;
 import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvMergeExecutable;
 import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvPropEditExecutable;
+import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvPropEditPath;
 import static lan.vandiemens.media.info.MediaInfoHelper.getMediaInfoExecutable;
 import lan.vandiemens.util.file.FileExtensionFilter;
 import org.apache.commons.lang3.ArrayUtils;
@@ -22,6 +23,10 @@ public class MatroskaEditor {
 
     public static final String[] supportedVideoFileFormats = {"mkv", "avi", "divx", "mp4", "ogm"};
     public static final String[] supportedSubtitleFileFormats = {"srt"};
+    public static final String HELP_OPTION = "-h";
+    public static final String LONG_HELP_OPTION = "--help";
+    public static final String VERSION_OPTION = "-v";
+    public static final String LONG_VERSION_OPTION = "--version";
 
 
     private MatroskaEditor() {
@@ -41,20 +46,19 @@ public class MatroskaEditor {
         // Parse argument list looking for options
         for (int i = 0; i < args.length - 1; i++) {
             switch (args[i]) {
-                case "-h":
-                case "--help":
+                case HELP_OPTION:
+                case LONG_HELP_OPTION:
                     showUsage();
                     System.exit(0);
                     break;
-                case "-v":
-                case "--version":
+                case VERSION_OPTION:
+                case LONG_VERSION_OPTION:
                     showVersion();
                     System.exit(0);
                     break;
                 default:
                     showUsage();
                     System.exit(0);
-                    break;
             }
         }
 
@@ -67,20 +71,17 @@ public class MatroskaEditor {
      * <p>
      * NOTE: Edition consists of adding text subtitle tracks (if provided as
      * SubRip subtitle files in the same folder), disabling unwanted audio
-     * and subtitle tracks, and renaming track titles.
+     * and subtitle tracks, and renaming Matroska properties fields.
      */
     public static void process(File folder) {
-        checkIfValid(folder);
-        checkIfMkvToolNixIsInstalled();
-        checkIfMediaInfoIsInstalled();
+        checkApplicationDependencies();
+        checkIfValidDirectory(folder);
 
-        System.out.println("Media folder: " + folder.getAbsolutePath());
         MediaFile[] mediaFiles = getEditableMediaFiles(folder);
         if (mediaFiles.length == 0) {
             System.out.println("No valid media files to edit!");
             return;
         }
-
         SubtitleFile[] subtitleFiles = getSupportedSubtitleFiles(folder);
         fixWrongSubtitleFiles(subtitleFiles);
         map(mediaFiles, subtitleFiles);
@@ -92,14 +93,14 @@ public class MatroskaEditor {
         runWithMkvToolNix(commands);
     }
 
-    /**
-     * Checks if the given file is an existing directory.
-     *
-     * @param folder the file specified by the user.
-     */
-    private static void checkIfValid(File folder) throws NullPointerException, IllegalArgumentException {
+    private static void checkApplicationDependencies() {
+        checkIfMediaInfoIsInstalled();
+        checkIfMkvToolNixIsInstalled();
+    }
+
+    private static void checkIfValidDirectory(File folder) {
         if (folder == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException(folder + " can't be null!");
         }
         if (!folder.exists()) {
             throw new IllegalArgumentException(folder + " doesn't exist!");
@@ -107,13 +108,14 @@ public class MatroskaEditor {
         if (!folder.isDirectory()) {
             throw new IllegalArgumentException(folder + " is not a directory!");
         }
+        System.out.println("Media folder: " + folder.getAbsolutePath());
     }
 
     private static void checkIfMkvToolNixIsInstalled() {
         System.out.println("Checking if MKVToolNix is installed on this system...");
         System.out.print("Looking for " + getMkvMergeExecutable().getAbsolutePath() + "... ");
         System.out.println(getMkvMergeExecutable().exists() ? "Found" : "Not found");
-        System.out.print("Looking for " + getMkvPropEditExecutable().getAbsolutePath() + "... ");
+        System.out.print("Looking for " + getMkvPropEditPath() + "... ");
         System.out.println(getMkvPropEditExecutable().exists() ? "Found" : "Not found");
         if (getMkvMergeExecutable().exists() && getMkvPropEditExecutable().exists()) {
             System.out.println("> MKVToolNix found\n");
@@ -275,7 +277,7 @@ public class MatroskaEditor {
                 try {
                     subtitleFile.fixEncoding();
                 } catch (IOException ex) {
-                    System.out.println("Encoding could not be fixed for " + subtitleFile.getFile().getName());
+                    System.out.println("Encoding could not be fixed for " + subtitleFile.getName());
                 }
             }
         }

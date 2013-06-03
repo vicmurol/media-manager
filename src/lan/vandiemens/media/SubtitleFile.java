@@ -12,7 +12,7 @@ import lan.vandiemens.util.file.FileUtils;
 import lan.vandiemens.util.lang.Language;
 
 /**
- * A subtitle file is considered a external subtitle track for MKV merging
+ * A subtitle file is considered an external subtitle track for MKV merging
  * purposes.
  *
  * @author vmurcia
@@ -73,6 +73,14 @@ public class SubtitleFile extends SubtitleTrack {
 
     public File getFile() {
         return file;
+    }
+
+    public String getName() {
+        return file.getName();
+    }
+    
+    public String getAbsolutePath() {
+        return file.getAbsolutePath();
     }
 
     public ReleaseInfo getReleaseInfo() {

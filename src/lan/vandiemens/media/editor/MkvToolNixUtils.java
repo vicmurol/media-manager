@@ -44,4 +44,8 @@ public class MkvToolNixUtils {
 
         return mkvPropEditExeFile;
     }
+
+    public static String getMkvPropEditPath() {
+        return getMkvPropEditExecutable().getAbsolutePath();
+    }
 }
