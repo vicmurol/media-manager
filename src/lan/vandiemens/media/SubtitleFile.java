@@ -49,8 +49,10 @@ public class SubtitleFile extends SubtitleTrack {
     }
 
     private boolean isSupportedSubtitle(File file) throws IOException {
+        boolean result = FileUtils.isEncodedInUtf8(file);
+        System.out.println("Subtitle file: " + file.getName() + " is" + (result ? " " : " NOT ") + "encoded in UTF-8");
         // TODO: Check if it is a valid SubRip text subtitle
-        return FileUtils.isEncodedInUtf8(file);
+        return result;
     }
 
     private void parseName(File file) {
