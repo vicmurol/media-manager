@@ -18,7 +18,8 @@ public class Cataloguer {
      * MediaInfo's supported container file formats.
      */
     public static final String[] supportedFormats = {"mkv", "avi", "divx", "mp4", "ogm", "wmv"};
-    public static final String MEDIAINFO_FILE_EXTENSION = ".mnfo";
+    public static final String MEDIAINFO_FILE_EXTENSION = "mnfo";
+    public static final String MD5_FILE_EXTENSION = "md5";
     /**
      * The directory containing the movie files to be scanned.
      */
@@ -95,7 +96,7 @@ public class Cataloguer {
         System.out.println();
 
         // Get list of media information files in the given movie directory
-        File[] mediaInfoFiles = moviesDirectory.listFiles(new FileExtensionFilter(new String[]{"info.txt"}));
+        File[] mediaInfoFiles = moviesDirectory.listFiles(new FileExtensionFilter(new String[]{ MEDIAINFO_FILE_EXTENSION }));
         for (File mediaInfoFile : mediaInfoFiles) {
             System.out.println("Media Info: " + mediaInfoFile.getName());
         }
@@ -249,7 +250,7 @@ public class Cataloguer {
             // Save the generated media info
             String mediaInfo = builder.toString();
             System.out.println("Media Info description:\n" + mediaInfo);
-            File mediaInfoFile = new File(containerFile.getParent() + File.separator + movieName + MEDIAINFO_FILE_EXTENSION);
+            File mediaInfoFile = new File(containerFile.getParent() + File.separator + movieName + "." + MEDIAINFO_FILE_EXTENSION);
             try (PrintWriter writer = new PrintWriter(new FileWriter(mediaInfoFile))) {
                 writer.print(mediaInfo);
             }
@@ -394,7 +395,7 @@ public class Cataloguer {
         mkvFile.renameTo(new File(mkvFile.getParent(), new String(builder)));
 
         // Delete MD5 hash file
-        File md5HashFile = new File(mediaInfoFile.getParent(), containerName + ".md5");
+        File md5HashFile = new File(mediaInfoFile.getParent(), containerName + "." + MD5_FILE_EXTENSION);
         if (md5HashFile.exists()) {
             if (md5HashFile.delete()) {
                 System.out.println(md5HashFile.getAbsolutePath() + " successfully deleted");
@@ -431,7 +432,7 @@ public class Cataloguer {
         String infoName;
         for (File infoFile : infoFiles) {
             infoName = FileUtils.getNameWithoutExtension(infoFile);
-            if (infoName.equals(mediaName + ".info")) {
+            if (infoName.equals(mediaName)) {
                 return true;
             }
         }
@@ -442,7 +443,7 @@ public class Cataloguer {
     private void saveMediaHashFile(File mediaFile, File infoFile) throws IOException {
         Md5FileGenerator generator = new Md5FileGenerator(mediaFile, infoFile);
         generator.setApplicationName(VersionInfo.getApplicationFullName());
-        File outputFile = new File(mediaFile.getParentFile(), FileUtils.getNameWithoutExtension(mediaFile) + ".md5");
+        File outputFile = new File(mediaFile.getParentFile(), FileUtils.getNameWithoutExtension(mediaFile) + "." + MD5_FILE_EXTENSION);
         generator.writeTo(outputFile);
     }
 
