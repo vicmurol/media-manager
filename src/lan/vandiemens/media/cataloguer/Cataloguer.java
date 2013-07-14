@@ -18,6 +18,7 @@ public class Cataloguer {
      * MediaInfo's supported container file formats.
      */
     public static final String[] supportedFormats = {"mkv", "avi", "divx", "mp4", "ogm", "wmv"};
+    public static final String MEDIAINFO_FILE_EXTENSION = ".mnfo";
     /**
      * The directory containing the movie files to be scanned.
      */
@@ -102,7 +103,7 @@ public class Cataloguer {
 
         for (File mediaFile : mediaFiles) {
             // Process only the movies that hasn't been catalogued previously
-            if (!isCataloged(mediaFile, mediaInfoFiles) && !reverseModeEnabled) {
+            if (!reverseModeEnabled && !isCataloged(mediaFile, mediaInfoFiles)) {
                 if (process(mediaFile)) {
                     System.out.println(mediaFile.getName() + " processed successfully");
                 } else {
@@ -248,7 +249,7 @@ public class Cataloguer {
             // Save the generated media info
             String mediaInfo = builder.toString();
             System.out.println("Media Info description:\n" + mediaInfo);
-            File mediaInfoFile = new File(containerFile.getParent() + File.separator + movieName + ".info.txt");
+            File mediaInfoFile = new File(containerFile.getParent() + File.separator + movieName + MEDIAINFO_FILE_EXTENSION);
             try (PrintWriter writer = new PrintWriter(new FileWriter(mediaInfoFile))) {
                 writer.print(mediaInfo);
             }
