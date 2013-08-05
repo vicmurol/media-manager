@@ -304,7 +304,7 @@ public class MatroskaEditor {
         System.out.println("Discarding incomplete media files...");
         ArrayList<MediaFile> completeMediaFiles = new ArrayList<>();
         for (MediaFile mediaFile : mediaFiles) {
-            if (mediaFile.meetsLanguageRequirements()) {
+            if (mediaFile.meetsLanguageRequirements() && mediaFile.meetsReleaseInfoRequirements()) {
                 completeMediaFiles.add(mediaFile);
             } else {
                 System.out.println("Media file \"" + mediaFile.getMainFile().getName() + "\" has been discarded!");

@@ -3,6 +3,7 @@ package lan.vandiemens.media.info.release;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
+ * The release information of a media container as parsed from a media filename.
  *
  * @author vmurcia
  */
@@ -22,6 +23,10 @@ public class ReleaseInfo {
 
     public int getYear() {
         return year;
+    }
+
+    public boolean isReleaseDateKnown() {
+        return year > 0;
     }
 
     public void setYear(int year) {
@@ -63,8 +68,10 @@ public class ReleaseInfo {
     public String getFormattedTitle() {
         StringBuilder titleBuilder = new StringBuilder();
         titleBuilder.append(isTitleCapitalized() ? title : WordUtils.capitalize(title));
-        titleBuilder.append(" ");
-        titleBuilder.append("(").append(year).append(")"); // TODO: Check if year is known
+        if (isReleaseDateKnown()) {
+            titleBuilder.append(" (").append(year).append(")");
+        }
+
         return titleBuilder.toString();
     }
 
@@ -82,6 +89,10 @@ public class ReleaseInfo {
 
     public String getVideoQuality() {
         return videoQuality;
+    }
+
+    public boolean isVideoQualityKnown() {
+        return videoQuality != null;
     }
 
     public void setVideoQuality(String quality) {
@@ -121,7 +132,6 @@ public class ReleaseInfo {
         if (info2 == null) {
             return false;
         }
-        return (info2.getTitle().equalsIgnoreCase(title)
-                && info2.getYear() == year);
+        return (info2.getTitle().equalsIgnoreCase(title) && info2.getYear() == year);
     }
 }

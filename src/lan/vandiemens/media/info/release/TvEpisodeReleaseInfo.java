@@ -17,6 +17,10 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         return episodeTitle;
     }
 
+    public boolean isEpisodeTitleKnown() {
+        return episodeTitle != null;
+    }
+
     public void setEpisodeTitle(String name) {
         episodeTitle = name;
     }
@@ -46,8 +50,11 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         int episode = episodeNumber;
         titleBuilder.append(episode > 9 ? "x" : "x0");
         titleBuilder.append(episode);
-        titleBuilder.append("] ");
-        titleBuilder.append(isTitleCapitalized() ? episodeTitle : WordUtils.capitalize(episodeTitle)); // TODO: Check if episode title is known
+        titleBuilder.append("]");
+        if (isEpisodeTitleKnown()) {
+            titleBuilder.append(" ").append(isTitleCapitalized() ? episodeTitle : WordUtils.capitalize(episodeTitle));
+        }
+
         return titleBuilder.toString();
     }
 

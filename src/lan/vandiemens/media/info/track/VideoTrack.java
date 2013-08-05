@@ -16,7 +16,7 @@ public class VideoTrack extends MediaTrack {
 
     @Override
     public String toString() {
-        return "[Video - " + format + " - " + getResolution() + "]";
+        return "[ID#" + id + " - Video - " + format + " - " + getResolution() + "]";
     }
 
     @Override
