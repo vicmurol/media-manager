@@ -8,7 +8,7 @@ public enum VideoSource {
     FULL_BLURAY,
     BD_REMUX,
     BD_RIP,
-    HD_ITUNES,
+    WEB_DOWNLOAD,
     HDTV_RIP,
     TV_RIP,
     HD_DVD,
@@ -24,7 +24,7 @@ public enum VideoSource {
             case "webdl":
             case "web-dl":
             case "hditunes":
-                return HD_ITUNES;
+                return WEB_DOWNLOAD;
             case "bdr":
             case "brip":
             case "brrip":
@@ -55,13 +55,13 @@ public enum VideoSource {
     public String toString() {
         switch (this) {
             case FULL_BLURAY:
-                return "BluRay";
+                return "Blu-ray";
             case BD_REMUX:
                 return "BDRemux";
             case BD_RIP:
                 return "BDRip";
-            case HD_ITUNES:
-                return "HDiTunes";
+            case WEB_DOWNLOAD:
+                return "Web-DL";
             case HDTV_RIP:
                 return "HDTVRip";
             case TV_RIP:
