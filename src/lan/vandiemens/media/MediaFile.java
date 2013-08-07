@@ -209,7 +209,7 @@ public class MediaFile {
     }
 
     public boolean meetsReleaseInfoRequirements() {
-        System.out.print("Checking release information requirements for \"" + file.getName() + "\"...");
+        System.out.print("Checking release information requirements for \"" + file.getName() + "\"... ");
         boolean result = false;
         if (releaseInfo == null) {
             System.out.println("Disapproved\nRequirement not met: " + file + " has not a supported file name pattern!");

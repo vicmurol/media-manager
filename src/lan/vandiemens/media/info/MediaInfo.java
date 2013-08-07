@@ -581,14 +581,12 @@ public class MediaInfo {
         System.out.println("Determining default tracks...");
         int i = 0;
         for (; i < tracks.length; i++) {
-            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.VIDEO) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
                 break;
             }
         }
         for (; i < tracks.length; i++) {
-            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.AUDIO) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
                 break;
@@ -597,7 +595,6 @@ public class MediaInfo {
             }
         }
         for (; i < tracks.length; i++) {
-            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.SUBTITLE) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
                 break;
@@ -609,7 +606,6 @@ public class MediaInfo {
             }
         }
         for (; i < tracks.length; i++) {
-            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.MENU) {
                 break;
             } else { // Remaining subtitle tracks are not default
