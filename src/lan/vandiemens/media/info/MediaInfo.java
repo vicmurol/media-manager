@@ -362,6 +362,8 @@ public class MediaInfo {
                     // Disable non-text subtitles
                     if (!subtitleTrack.isTextBased()) {
                         tracks[i].disable();
+                        System.out.println("Track #" + i + " disabled: " + tracks[i]);
+                        System.out.println("Reason:  Only text subtitles allowed");
                         continue;
                     }
                     switch (originalLanguage) {
@@ -505,6 +507,7 @@ public class MediaInfo {
         TreeSet<Track> trackSet = new TreeSet<>(trackComparator);
         trackSet.addAll(Arrays.asList(tracks));
         tracks = trackSet.toArray(new Track[trackSet.size()]);
+        System.out.println("> Rearrangement has finished"); // TO-DO Show if there has been a rearrangement or not
     }
 
     /**
@@ -538,9 +541,6 @@ public class MediaInfo {
 
     public void swapSubtitles(Language language, Language language2) {
         System.out.println("Swapping subtitles: " + language.getLanguageName() + " & " + language2.getLanguageName() + "...");
-        if (language == null || language2 == null) {
-            throw new NullPointerException();
-        }
         if (language == language2) {
             throw new IllegalArgumentException("Both languages are the same language!");
         }
@@ -578,14 +578,17 @@ public class MediaInfo {
     }
 
     public void setDefaults() {
+        System.out.println("Determining default tracks...");
         int i = 0;
         for (; i < tracks.length; i++) {
+            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.VIDEO) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
                 break;
             }
         }
         for (; i < tracks.length; i++) {
+            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.AUDIO) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
                 break;
@@ -594,14 +597,19 @@ public class MediaInfo {
             }
         }
         for (; i < tracks.length; i++) {
+            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.SUBTITLE) {
                 ((MediaTrack) tracks[i++]).setAsDefault(true);
+                break;
+            } else if (tracks[i].getType() == TrackType.MENU) { // No subs but menu track
+                i++;
                 break;
             } else { // Remaining audio tracks are not default
                 ((MediaTrack) tracks[i]).setAsDefault(false);
             }
         }
         for (; i < tracks.length; i++) {
+            System.out.println(tracks[i]);
             if (tracks[i].getType() == TrackType.MENU) {
                 break;
             } else { // Remaining subtitle tracks are not default
