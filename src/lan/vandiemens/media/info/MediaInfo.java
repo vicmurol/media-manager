@@ -122,10 +122,6 @@ public class MediaInfo {
         return originalLanguage;
     }
 
-//    public void setOriginalLanguage(String language) {
-//        originalLanguage = Language.parseLanguage(language);
-//    }
-
     public void setOriginalLanguage(Language language) {
         if (language == null) {
             throw new IllegalArgumentException("Language can't be null");
@@ -475,7 +471,7 @@ public class MediaInfo {
         int id;
         for (Track track : tracks) {
             if (track.getType() != TrackType.MENU) {
-                id = ((MediaTrack) track).getId();
+                id = ((MediaTrack) track).getTrackNumber();
                 if (id > lastId) {
                     lastId = id;
                 } else {
@@ -723,23 +719,13 @@ public class MediaInfo {
 
     private void parseMediaTracks(Elements trackElements) throws MediaInfoException {
         System.out.println("Parsing media tracks...");
-        tracks = new Track[trackElements.size() - 1]; // Without General track
+        // MediaInfo's general track, which has index 0, is not considered a track in MKVToolNix.
+        // Thus, we skip it when parsing tracks:
+        tracks = new Track[trackElements.size() - 1];
         for (int i = 1; i < trackElements.size(); i++) {
             tracks[i - 1] = parseTrack(trackElements.get(i));
             if (tracks[i - 1] == null) {
                 throw new MediaInfoException("Track #" + (i - 1) + " could not be parsed");
-            }
-        }
-        fixTidOffset();
-    }
-
-    private void fixTidOffset() {
-        System.out.println("Fixing TID offset...");
-        if (((MediaTrack) tracks[0]).getId() > 0) {
-            for (int i = 0; i < tracks.length; i++) {
-                if (tracks[i].getType() != TrackType.MENU) {
-                    ((MediaTrack) tracks[i]).setTid(((MediaTrack) tracks[i]).getId() - 1);
-                }
             }
         }
     }
@@ -777,7 +763,7 @@ public class MediaInfo {
         VideoTrack track = new VideoTrack();
         track.setStreamId((trackElement.getAttribute("streamid") != null) ? Integer.parseInt(trackElement.getAttributeValue("streamid")) : 0);
         Element element = trackElement.getFirstChildElement("ID");
-        track.setId(Integer.parseInt(element.getValue()));
+        track.setTrackNumber(Integer.parseInt(element.getValue()));
         element = trackElement.getFirstChildElement("Format");
         track.setFormat(element.getValue());
         element = trackElement.getFirstChildElement("Format_Info");
@@ -817,7 +803,7 @@ public class MediaInfo {
         AudioTrack track = new AudioTrack();
         track.setStreamId((trackElement.getAttribute("streamid") != null) ? Integer.parseInt(trackElement.getAttributeValue("streamid")) : 0);
         Element element = trackElement.getFirstChildElement("ID");
-        track.setId(Integer.parseInt(element.getValue()));
+        track.setTrackNumber(Integer.parseInt(element.getValue()));
         element = trackElement.getFirstChildElement("Format");
         track.setFormat(element.getValue());
         element = trackElement.getFirstChildElement("Format_Info");
@@ -847,7 +833,7 @@ public class MediaInfo {
         SubtitleTrack track = new SubtitleTrack();
         track.setStreamId((trackElement.getAttribute("streamid") != null) ? Integer.parseInt(trackElement.getAttributeValue("streamid")) : 0);
         Element element = trackElement.getFirstChildElement("ID");
-        track.setId(Integer.parseInt(element.getValue()));
+        track.setTrackNumber(Integer.parseInt(element.getValue()));
         element = trackElement.getFirstChildElement("Format");
         track.setFormat(element.getValue());
         element = trackElement.getFirstChildElement("Codec_ID");

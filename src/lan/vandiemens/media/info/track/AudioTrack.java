@@ -62,7 +62,7 @@ public class AudioTrack extends MediaTrack {
 
     @Override
     public String toString() {
-        return "[ID#" + id + " - Audio - " + format + " - " + language.getLanguageName() + (isCommentary() ? " Commentary]" : "]");
+        return "[ID#" + trackId + " - Audio - " + format + " - " + language.getLanguageName() + (isCommentary() ? " Commentary]" : "]");
     }
 
     @Override
@@ -75,7 +75,7 @@ public class AudioTrack extends MediaTrack {
         }
         builder.append("\">\n");
         builder.append("<ID>");
-        builder.append(id);
+        builder.append(trackNumber);
         builder.append("</ID>\n");
         builder.append("<Format>");
         builder.append(format);

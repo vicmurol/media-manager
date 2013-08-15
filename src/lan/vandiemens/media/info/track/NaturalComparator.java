@@ -25,9 +25,9 @@ public class NaturalComparator implements Comparator<Track > {
         MediaTrack mediaTrack1 = (MediaTrack) track1;
         MediaTrack mediaTrack2 = (MediaTrack) track2;
 
-        if (mediaTrack1.getId() < mediaTrack2.getId()) {
+        if (mediaTrack1.getTrackNumber() < mediaTrack2.getTrackNumber()) {
             return -1; // Lower ID comes first
-        } else if (mediaTrack1.getId() == mediaTrack2.getId()) {
+        } else if (mediaTrack1.getTrackNumber() == mediaTrack2.getTrackNumber()) {
             return 0; // Shouldn't happen, IDs are unique
         } else {
             return 1;

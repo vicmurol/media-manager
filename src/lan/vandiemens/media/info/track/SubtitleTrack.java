@@ -54,7 +54,7 @@ public class SubtitleTrack extends MediaTrack {
 
     @Override
     public String toString() {
-        return "[ID#" + id + " - Subtitle - " + format + " - " + language.getLanguageName() + " " + subtitleType + "]";
+        return "[ID#" + trackId + " - Subtitle - " + format + " - " + language.getLanguageName() + " " + subtitleType + "]";
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SubtitleTrack extends MediaTrack {
         }
         builder.append("\">\n");
         builder.append("<ID>");
-        builder.append(id);
+        builder.append(trackNumber);
         builder.append("</ID>\n");
         builder.append("<Format>");
         builder.append(format);

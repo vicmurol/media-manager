@@ -16,7 +16,7 @@ public class VideoTrack extends MediaTrack {
 
     @Override
     public String toString() {
-        return "[ID#" + id + " - Video - " + format + " - " + getResolution() + "]";
+        return "[ID#" + trackId + " - Video - " + format + " - " + getResolution() + "]";
     }
 
     @Override
@@ -29,7 +29,7 @@ public class VideoTrack extends MediaTrack {
         }
         builder.append("\">\n");
         builder.append("<ID>");
-        builder.append(id);
+        builder.append(trackNumber);
         builder.append("</ID>\n");
         builder.append("<Format>");
         builder.append(format);

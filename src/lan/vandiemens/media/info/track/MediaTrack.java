@@ -10,8 +10,11 @@ import lan.vandiemens.util.lang.Language;
  */
 public abstract class MediaTrack implements Track {
 
-    protected int id = 0;
-    protected int tid = 0;
+    // mkvmerge and mkvextract use track IDs but mkvpropedit and MediaInfo use track numbers instead
+    // Track numbers start at 1
+    protected int trackNumber = 0;
+    // Track IDs start at 0
+    protected int trackId = 0;
     protected int streamId = 0;
     protected String format = null;
     protected String formatInfo = null;
@@ -46,20 +49,22 @@ public abstract class MediaTrack implements Track {
         this.formatInfo = formatInfo;
     }
 
-    public int getId() {
-        return id;
+    public int getTrackNumber() {
+        return trackNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTrackNumber(int number) {
+        this.trackNumber = number;
+        trackId = number - 1;
     }
 
-    public int getTid() {
-        return tid;
+    public int getTrackId() {
+        return trackId;
     }
 
-    public void setTid(int tid) {
-        this.tid = tid;
+    public void setTrackId(int tid) {
+        this.trackId = tid;
+        trackNumber = tid + 1;
     }
 
     public boolean isDefault() {
@@ -141,7 +146,8 @@ public abstract class MediaTrack implements Track {
         StringBuilder builder = new StringBuilder();
         builder.append(EDIT_OPTION);
         builder.append(" ");
-        builder.append(TRACK_HEADER_OPTION).append(id);
+        // mkvpropedit uses track numbers instead of track IDs to reference tracks
+        builder.append(TRACK_HEADER_OPTION).append(trackNumber);
         builder.append(" ");
         builder.append(SET_OPTION);
         builder.append(" ");

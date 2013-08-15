@@ -123,7 +123,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
                     order.append("0");
                     trackTypeDescription.append(DOUBLE_QUOTES).append(VIDEO_TRACKS_OPTION).append(DOUBLE_QUOTES);
                     trackTypeDescription.append(SPACE);
-                    trackTypeDescription.append(DOUBLE_QUOTES).append(((MediaTrack) tracks[i]).getTid()).append(DOUBLE_QUOTES);
+                    trackTypeDescription.append(DOUBLE_QUOTES).append(((MediaTrack) tracks[i]).getTrackId()).append(DOUBLE_QUOTES);
                     trackTypeDescription.append(SPACE);
                     break;
                 case AUDIO:
@@ -138,7 +138,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
                         trackTypeDescription.append(SPACE);
                         trackTypeDescription.append(DOUBLE_QUOTES);
                     }
-                    trackTypeDescription.append(((MediaTrack) tracks[i]).getTid());
+                    trackTypeDescription.append(((MediaTrack) tracks[i]).getTrackId());
                     if (audioCounter == audioTrackCount) { // Last audio track
                         trackTypeDescription.append(DOUBLE_QUOTES);
                         trackTypeDescription.append(SPACE);
@@ -161,7 +161,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
                             trackTypeDescription.append(SPACE);
                             trackTypeDescription.append(DOUBLE_QUOTES);
                         }
-                        trackTypeDescription.append(((MediaTrack) tracks[i]).getTid());
+                        trackTypeDescription.append(((MediaTrack) tracks[i]).getTrackId());
                     }
                     break;
                 default: // MENU
@@ -169,7 +169,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
                     continue;
             }
             order.append(":");
-            order.append(((MediaTrack)tracks[i]).getTid());
+            order.append(((MediaTrack)tracks[i]).getTrackId());
         }
         if (subtitleCounter > 0) {
             trackTypeDescription.append(DOUBLE_QUOTES);
@@ -243,25 +243,25 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         StringBuilder description = new StringBuilder(DEFAULT_TRACK_DESCRIPTION_LENGTH);
         description.append(DOUBLE_QUOTES).append(LANGUAGE_OPTION).append(DOUBLE_QUOTES);
         description.append(SPACE);
-        description.append(DOUBLE_QUOTES).append(mediaTrack.getTid()).append(COLON).append(mediaTrack.getLanguageCode()).append(DOUBLE_QUOTES);
+        description.append(DOUBLE_QUOTES).append(mediaTrack.getTrackId()).append(COLON).append(mediaTrack.getLanguageCode()).append(DOUBLE_QUOTES);
         description.append(SPACE);
         description.append(DOUBLE_QUOTES).append(TRACK_NAME_OPTION).append(DOUBLE_QUOTES);
         description.append(SPACE);
-        description.append(DOUBLE_QUOTES).append(mediaTrack.getTid()).append(COLON).append(getTrackName(mediaTrack)).append(DOUBLE_QUOTES);
+        description.append(DOUBLE_QUOTES).append(mediaTrack.getTrackId()).append(COLON).append(getTrackName(mediaTrack)).append(DOUBLE_QUOTES);
         description.append(SPACE);
         description.append(DOUBLE_QUOTES).append(DEFAULT_TRACK_OPTION).append(DOUBLE_QUOTES);
         description.append(SPACE);
-        description.append(DOUBLE_QUOTES).append(mediaTrack.getTid()).append(COLON).append(mediaTrack.isDefault() ? "yes" : "no").append(DOUBLE_QUOTES);
+        description.append(DOUBLE_QUOTES).append(mediaTrack.getTrackId()).append(COLON).append(mediaTrack.isDefault() ? "yes" : "no").append(DOUBLE_QUOTES);
         description.append(SPACE);
         description.append(DOUBLE_QUOTES).append(FORCED_TRACK_OPTION).append(DOUBLE_QUOTES);
         description.append(SPACE);
-        description.append(DOUBLE_QUOTES).append(mediaTrack.getTid()).append(COLON).append(mediaTrack.isForced() ? "yes" : "no").append(DOUBLE_QUOTES);
+        description.append(DOUBLE_QUOTES).append(mediaTrack.getTrackId()).append(COLON).append(mediaTrack.isForced() ? "yes" : "no").append(DOUBLE_QUOTES);
 
         if (mediaTrack.getType() == TrackType.VIDEO) {
             description.append(SPACE);
             description.append(DOUBLE_QUOTES).append(DISPLAY_DIMENSIONS_OPTION).append(DOUBLE_QUOTES);
             description.append(SPACE);
-            description.append(DOUBLE_QUOTES).append(mediaTrack.getTid()).append(COLON).append(((VideoTrack) mediaTrack).getResolution()).append(DOUBLE_QUOTES);
+            description.append(DOUBLE_QUOTES).append(mediaTrack.getTrackId()).append(COLON).append(((VideoTrack) mediaTrack).getResolution()).append(DOUBLE_QUOTES);
         }
 
         return description.toString();

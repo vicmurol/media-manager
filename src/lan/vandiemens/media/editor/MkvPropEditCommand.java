@@ -1,7 +1,9 @@
 package lan.vandiemens.media.editor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import lan.vandiemens.media.EditableMkvProperties;
 import lan.vandiemens.media.MediaFile;
 import lan.vandiemens.media.info.track.Track;
 
@@ -32,6 +34,12 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
         trackEditDescriptions = getTrackEditDescriptions(mediaFile);
     }
 
+    public MkvPropEditCommand(File mkvFile, EditableMkvProperties mkvProperties) {
+        title = mkvProperties.getTitle();
+        outputFile = inputFile = mkvFile;
+        trackEditDescriptions = getTrackEditDescriptions(mkvProperties);
+    }
+
     private String[] getTrackEditDescriptions(MediaFile mediaFile) {
         Track[] tracks = mediaFile.getMediaInfo().getTracks();
         int trackCount = mediaFile.hasMenuTrack() ? tracks.length - 1 : tracks.length;
@@ -40,6 +48,43 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
             descriptions[i] = tracks[i].getMkvPropEditDescription();
         }
         return descriptions;
+    }
+
+    private String[] getTrackEditDescriptions(EditableMkvProperties mkvProperties) {
+        int trackCount = mkvProperties.hasMenuTrack() ? mkvProperties.getTrackCount() - 1 : mkvProperties.getTrackCount();
+        String[] descriptions = new String[trackCount];
+        for (int i = 0; i < trackCount; i++) {
+            descriptions[i] = getMkvPropEditDescription(mkvProperties, i);
+        }
+        return descriptions;
+    }
+
+    private String getMkvPropEditDescription(EditableMkvProperties mkvProperties, int trackIndex) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(EDIT_OPTION);
+        builder.append(" ");
+        // mkvpropedit uses track numbers instead of track IDs, unlike mkvmerge and mkvextrack
+        // Track numbering starts at 1
+        int trackNumber = trackIndex + 1;
+        builder.append(TRACK_HEADER_OPTION).append(trackNumber);
+        builder.append(" ");
+        builder.append(SET_OPTION);
+        builder.append(" ");
+        builder.append(DEFAULT_TRACK_FLAG_PROPERTY).append("=").append(mkvProperties.isDefault(trackIndex) ? "1" : "0");
+        builder.append(" ");
+        builder.append(SET_OPTION);
+        builder.append(" ");
+        builder.append(FORCED_TRACK_FLAG_PROPERTY).append("=").append(mkvProperties.isForced(trackIndex) ? "1" : "0");
+        builder.append(" ");
+        builder.append(SET_OPTION);
+        builder.append(" ");
+        builder.append(TRACK_NAME_PROPERTY).append("=").append("\"").append(mkvProperties.getTitle(trackIndex)).append("\"");
+        builder.append(" ");
+        builder.append(SET_OPTION);
+        builder.append(" ");
+        builder.append(LANGUAGE_PROPERTY).append("=").append("\"").append(mkvProperties.getLanguage(trackIndex).getThreeLettersIsoCode()).append("\"");
+
+        return builder.toString();
     }
 
     @Override
