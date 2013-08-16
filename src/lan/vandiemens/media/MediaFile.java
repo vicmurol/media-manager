@@ -40,8 +40,8 @@ public class MediaFile {
         mediaInfo = new MediaInfo(file);
         System.out.println("Media information has been generated\n");
         releaseInfo = ReleaseInfoParser.parse(file);
-        fixWrongInfo();
         System.out.println("Release information has been generated\n");
+        fixWrongInfo();
 
         this.file = file;
     }
@@ -234,10 +234,10 @@ public class MediaFile {
             return;
         }
         fixVideoTrackTitle();
-        // Try to guess source if unknown
+        // Try to guess media source if unknown
         if (releaseInfo.getVideoSource() == null && releaseInfo.isVideoQualityKnown() && releaseInfo.getVideoQuality().startsWith("1080")) {
             releaseInfo.setVideoSource(mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS ? "BDRip" : "BluRay");
-        // Correct source if incorrect
+        // Correct media source if incorrect
         } else if (releaseInfo.getVideoSource() != null && releaseInfo.getVideoSource().equalsIgnoreCase("bluray") && mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS) {
             releaseInfo.setVideoSource("BDRip");
         }
