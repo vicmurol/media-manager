@@ -11,9 +11,7 @@ import lan.vandiemens.util.lang.Language;
 public abstract class MediaTrack implements Track {
 
     // mkvmerge and mkvextract use track IDs but mkvpropedit and MediaInfo use track numbers instead
-    // Track numbers start at 1
-    protected int trackNumber = 0;
-    // Track IDs start at 0
+    // Track numbers start at 1, but track IDs start at 0
     protected int trackId = 0;
     protected int streamId = 0;
     protected String format = null;
@@ -49,22 +47,24 @@ public abstract class MediaTrack implements Track {
         this.formatInfo = formatInfo;
     }
 
-    public int getTrackNumber() {
-        return trackNumber;
-    }
-
-    public void setTrackNumber(int number) {
-        this.trackNumber = number;
-        trackId = number - 1;
-    }
-
+    @Override
     public int getTrackId() {
         return trackId;
     }
 
+    @Override
     public void setTrackId(int tid) {
-        this.trackId = tid;
-        trackNumber = tid + 1;
+        trackId = tid;
+    }
+
+    @Override
+    public int getTrackNumber() {
+        return trackId + 1;
+    }
+
+    @Override
+    public void setTrackNumber(int number) {
+        trackId = number - 1;
     }
 
     public boolean isDefault() {
@@ -93,6 +93,7 @@ public abstract class MediaTrack implements Track {
         isDisabled = true;
     }
 
+    @Override
     public Language getLanguage() {
         return language;
     }
@@ -101,10 +102,12 @@ public abstract class MediaTrack implements Track {
         return (language == null || language == Language.UNDEFINED) ? "und" : language.getThreeLettersIsoCode();
     }
 
+    @Override
     public void setLanguage(Language language) {
         this.language = language;
     }
 
+    @Override
     public void setLanguage(String language) {
         this.language = language == null ? Language.UNDEFINED : Language.parseLanguage(language);
     }
@@ -133,10 +136,12 @@ public abstract class MediaTrack implements Track {
         this.streamId = streamId;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public void setTitle(String title) {
         this.title = title;
     }
@@ -147,7 +152,7 @@ public abstract class MediaTrack implements Track {
         builder.append(EDIT_OPTION);
         builder.append(" ");
         // mkvpropedit uses track numbers instead of track IDs to reference tracks
-        builder.append(TRACK_HEADER_OPTION).append(trackNumber);
+        builder.append(TRACK_HEADER_OPTION).append(getTrackNumber());
         builder.append(" ");
         builder.append(SET_OPTION);
         builder.append(" ");
@@ -167,6 +172,4 @@ public abstract class MediaTrack implements Track {
 
         return builder.toString();
     }
-
-    public abstract String getFormattedTitle();
 }

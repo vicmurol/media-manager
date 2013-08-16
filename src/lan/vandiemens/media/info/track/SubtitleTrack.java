@@ -67,7 +67,7 @@ public class SubtitleTrack extends MediaTrack {
         }
         builder.append("\">\n");
         builder.append("<ID>");
-        builder.append(trackNumber);
+        builder.append(getTrackNumber());
         builder.append("</ID>\n");
         builder.append("<Format>");
         builder.append(format);

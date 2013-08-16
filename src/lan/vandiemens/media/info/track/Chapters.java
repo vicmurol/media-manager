@@ -1,26 +1,20 @@
 package lan.vandiemens.media.info.track;
 
 /**
+ * Chapters are a way to set predefined points to jump to in video or audio.
  *
  * @author vmurcia
  */
-public class MenuTrack implements Track {
+public class Chapters {
 
-    private boolean isEnabled = true;
+    private boolean enabled = true;
 
-    @Override
-    public TrackType getType() {
-        return TrackType.MENU;
+    public boolean areEnabled() {
+        return enabled;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    @Override
     public void disable() {
-        isEnabled = false;
+        enabled = false;
     }
 
     @Override
@@ -28,12 +22,10 @@ public class MenuTrack implements Track {
         return "[Menu]";
     }
 
-    @Override
     public String toXml() {
         return "Menu";
     }
 
-    @Override
     public String getMkvPropEditDescription() {
         return "";
     }

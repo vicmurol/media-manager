@@ -39,6 +39,7 @@ public class MediaInfo {
     private String encodedDate = null;
     private String writingApplication = null;
     private String writingLibrary = null;
+    private Chapters chapters = null;
     private Track[] tracks = null;
     private Pattern pixelPattern = Pattern.compile("^(?<length>[\\d]{1,3}(?:[ ,]?[\\d]{3})*) pixels$");
 
@@ -211,16 +212,7 @@ public class MediaInfo {
 
     public boolean hasSpanishAudioTrack() {
         for (Track track : tracks) {
-            if (track.getType() == TrackType.AUDIO && ((AudioTrack)track).getLanguage() == Language.SPANISH) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasMenuTrack() {
-        for (Track track : tracks) {
-            if (track.getType() == TrackType.MENU && track.isEnabled()) {
+            if (track.getType() == TrackType.AUDIO && ((AudioTrack) track).getLanguage() == Language.SPANISH) {
                 return true;
             }
         }
@@ -253,13 +245,16 @@ public class MediaInfo {
         return false;
     }
 
+    public boolean hasChapters() {
+        return chapters != null;
+    }
+
     /**
      * NOTE: Every track should have its corresponding language tag correct for
      * this method to work as wanted. Unknown language tracks will be disabled.
      */
     public void disableUnwantedTracks() {
         int videoTrackCount = 0;
-        int menuTrackCount = 0;
         int englishAudioTrackCount = 0;
         int spanishAudioTrackCount = 0;
         int originalLanguageAudioTrackCount = 0;
@@ -431,14 +426,6 @@ public class MediaInfo {
                             }
                     }
                     break;
-                // Only allow the first menu track, disable the rest
-                case MENU:
-                    if (++menuTrackCount > 1) {
-                        tracks[i].disable();
-                        System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                        System.out.println("Reason: Only one menu track is allowed");
-                    }
-                    break;
                 // Disable unknown tracks
                 default:
                     tracks[i].disable();
@@ -467,16 +454,14 @@ public class MediaInfo {
     }
 
     private boolean hasOriginalTrackOrder() {
-        int lastId = -1;
-        int id;
+        int lastTid = -1;
+        int tid;
         for (Track track : tracks) {
-            if (track.getType() != TrackType.MENU) {
-                id = ((MediaTrack) track).getTrackNumber();
-                if (id > lastId) {
-                    lastId = id;
-                } else {
-                    return false;
-                }
+            tid = track.getTrackId();
+            if (tid > lastTid) {
+                lastTid = tid;
+            } else {
+                return false;
             }
         }
         return true;
@@ -573,40 +558,40 @@ public class MediaInfo {
         }
     }
 
+    /**
+     * Sets the first track of each type as default.
+     * <p>
+     * NOTE: The remaining tracks of each type are made non default.
+     */
     public void setDefaults() {
         System.out.println("Determining default tracks...");
         int i = 0;
+        // TODO: Allow set defaults to work when tracks are not ordered by track type
         for (; i < tracks.length; i++) {
             if (tracks[i].getType() == TrackType.VIDEO) {
-                ((MediaTrack) tracks[i++]).setAsDefault(true);
+                tracks[i++].setAsDefault(true);
                 break;
             }
         }
         for (; i < tracks.length; i++) {
             if (tracks[i].getType() == TrackType.AUDIO) {
-                ((MediaTrack) tracks[i++]).setAsDefault(true);
+                tracks[i++].setAsDefault(true);
                 break;
             } else { // Remaining video tracks are not default
-                ((MediaTrack) tracks[i]).setAsDefault(false);
+                tracks[i].setAsDefault(false);
             }
         }
         for (; i < tracks.length; i++) {
             if (tracks[i].getType() == TrackType.SUBTITLE) {
-                ((MediaTrack) tracks[i++]).setAsDefault(true);
-                break;
-            } else if (tracks[i].getType() == TrackType.MENU) { // No subs but menu track
-                i++;
+                tracks[i++].setAsDefault(true);
                 break;
             } else { // Remaining audio tracks are not default
-                ((MediaTrack) tracks[i]).setAsDefault(false);
+                tracks[i].setAsDefault(false);
             }
         }
         for (; i < tracks.length; i++) {
-            if (tracks[i].getType() == TrackType.MENU) {
-                break;
-            } else { // Remaining subtitle tracks are not default
-                ((MediaTrack) tracks[i]).setAsDefault(false);
-            }
+            // Remaining subtitle tracks are not default
+            tracks[i].setAsDefault(false);
         }
     }
 
@@ -684,10 +669,13 @@ public class MediaInfo {
         }
 
         parseGeneralInfo(trackElements);
+        parseChapters(trackElements);
         parseMediaTracks(trackElements);
     }
 
     private void parseGeneralInfo(Elements trackElements) throws MediaInfoException {
+        // MediaInfo's general track, which has index 0, is not really a track.
+        // Instead, it corresponds to Matroska segment info.
         Element generalTrack = trackElements.get(0);
         String type = generalTrack.getAttributeValue("type");
         if (type == null || !type.equalsIgnoreCase("General")) {
@@ -717,12 +705,29 @@ public class MediaInfo {
         writingLibrary = (element != null) ? element.getValue() : null;
     }
 
+    private void parseChapters(Elements trackElements) {
+        Element element;
+        // Skip general track, which has index 0
+        for (int i = 1; i < trackElements.size(); i++) {
+            element = trackElements.get(i);
+            if (element.getAttributeValue("type").equalsIgnoreCase("Menu")) {
+                System.out.println("Menu chapters found");
+                chapters = getChapters(element);
+                return;
+            }
+        }
+    }
+
+    private Chapters getChapters(Element element) {
+        return new Chapters();
+    }
+
     private void parseMediaTracks(Elements trackElements) throws MediaInfoException {
         System.out.println("Parsing media tracks...");
-        // MediaInfo's general track, which has index 0, is not considered a track in MKVToolNix.
-        // Thus, we skip it when parsing tracks:
-        tracks = new Track[trackElements.size() - 1];
-        for (int i = 1; i < trackElements.size(); i++) {
+        int trackCount = hasChapters() ? trackElements.size() - 2 : trackElements.size() - 1; // General track and menu track doesn't count
+        tracks = new Track[trackCount];
+        // Skip general track (first) and menu track (last), if any
+        for (int i = 1; i <= trackCount; i++) {
             tracks[i - 1] = parseTrack(trackElements.get(i));
             if (tracks[i - 1] == null) {
                 throw new MediaInfoException("Track #" + (i - 1) + " could not be parsed");
@@ -749,7 +754,6 @@ public class MediaInfo {
                 track = getSubtitleTrack(trackElement);
                 break;
             case "Menu":
-                track = getMenuTrack(trackElement);
                 break;
             default:
                 System.err.println("Invalid Mediainfo XML file: An unknown <track> element has been found");
@@ -857,10 +861,6 @@ public class MediaInfo {
         System.out.println(" done");
 
         return track;
-    }
-
-    private Track getMenuTrack(Element trackElement) {
-        return new MenuTrack();
     }
 
     private void makeCorrections() {

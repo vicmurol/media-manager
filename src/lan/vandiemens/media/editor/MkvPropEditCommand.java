@@ -42,18 +42,16 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
 
     private String[] getTrackEditDescriptions(MediaFile mediaFile) {
         Track[] tracks = mediaFile.getMediaInfo().getTracks();
-        int trackCount = mediaFile.hasMenuTrack() ? tracks.length - 1 : tracks.length;
-        String[] descriptions = new String[trackCount];
-        for (int i = 0; i < trackCount; i++) {
+        String[] descriptions = new String[tracks.length];
+        for (int i = 0; i < tracks.length; i++) {
             descriptions[i] = tracks[i].getMkvPropEditDescription();
         }
         return descriptions;
     }
 
     private String[] getTrackEditDescriptions(EditableMkvProperties mkvProperties) {
-        int trackCount = mkvProperties.hasMenuTrack() ? mkvProperties.getTrackCount() - 1 : mkvProperties.getTrackCount();
-        String[] descriptions = new String[trackCount];
-        for (int i = 0; i < trackCount; i++) {
+        String[] descriptions = new String[mkvProperties.getTrackCount()];
+        for (int i = 0; i < mkvProperties.getTrackCount(); i++) {
             descriptions[i] = getMkvPropEditDescription(mkvProperties, i);
         }
         return descriptions;

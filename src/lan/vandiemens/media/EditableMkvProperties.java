@@ -1,7 +1,6 @@
 package lan.vandiemens.media;
 
 import lan.vandiemens.media.info.MediaInfo;
-import lan.vandiemens.media.info.track.MediaTrack;
 import lan.vandiemens.media.info.track.Track;
 import lan.vandiemens.media.info.track.TrackType;
 import lan.vandiemens.util.lang.Language;
@@ -26,13 +25,10 @@ public class EditableMkvProperties {
 
     private EditableTrackInfo getEditableInfo(Track track) {
         EditableTrackInfo info = new EditableTrackInfo(track.getType());
-        if (track.getType() != TrackType.MENU) {
-            MediaTrack mediaTrack = (MediaTrack) track;
-            info.setTitle(mediaTrack.getTitle());
-            info.setLanguage(mediaTrack.getLanguage());
-            info.setDefault(mediaTrack.isDefault());
-            info.setForced(mediaTrack.isForced());
-        }
+        info.setTitle(track.getTitle());
+        info.setLanguage(track.getLanguage());
+        info.setDefault(track.isDefault());
+        info.setForced(track.isForced());
         return info;
     }
 
@@ -78,15 +74,6 @@ public class EditableMkvProperties {
 
     public void setForced(int trackIndex, boolean forced) {
         tracksProperties[trackIndex].setForced(forced);
-    }
-
-    public boolean hasMenuTrack() {
-        for (EditableTrackInfo editableTrack : tracksProperties) {
-            if (editableTrack.getType() == TrackType.MENU) {
-                return true;
-            }
-        }
-        return false;
     }
 }
 

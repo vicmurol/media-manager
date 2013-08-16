@@ -108,8 +108,8 @@ public class MediaFile {
         return mediaInfo.hasSpanishAudioTrack();
     }
 
-    public boolean hasMenuTrack() {
-        return mediaInfo.hasMenuTrack();
+    public boolean hasChapters() {
+        return mediaInfo.hasChapters();
     }
 
     public boolean hasEnglishCompleteTextSubtitles() {
