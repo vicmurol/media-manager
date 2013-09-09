@@ -1,4 +1,4 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
     @Override
     public String toString() {
         StringBuilder command = new StringBuilder(DEFAULT_COMMAND_LENGTH);
-        command.append(DOUBLE_QUOTES).append(MkvToolNixUtils.getMkvMergeExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
+        command.append(DOUBLE_QUOTES).append(MkvToolNixHelper.getMkvMergeExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
         command.append(SPACE);
         command.append(OUTPUT_OPTION);
         command.append(SPACE);
@@ -77,7 +77,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         List<String> result = new ArrayList<>(4);
 
         // Add command
-        result.add(MkvToolNixUtils.getMkvMergeExecutable().getAbsolutePath());
+        result.add(MkvToolNixHelper.getMkvMergeExecutable().getAbsolutePath());
 
         // Add output option
         result.add(OUTPUT_OPTION);

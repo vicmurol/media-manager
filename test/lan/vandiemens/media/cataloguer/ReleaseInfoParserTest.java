@@ -4,6 +4,7 @@
  */
 package lan.vandiemens.media.cataloguer;
 
+import lan.vandiemens.media.info.release.MovieReleaseInfo;
 import lan.vandiemens.media.info.release.ReleaseInfo;
 import lan.vandiemens.media.info.release.TvEpisodeReleaseInfo;
 import org.junit.AfterClass;
@@ -36,16 +37,16 @@ public class ReleaseInfoParserTest {
         System.out.println("Check if filename matches TV series pattern");
 
         String filename = "The.Walking.Dead.S02E11.Judge.Jury.Executioner.720p.WEB-DL.AAC2.0.H.264-CtrlHD";
-        assertTrue(ReleaseInfoParser.isTvSeries(filename));
+        assertTrue(ReleaseInfoParser.hasTvSeriesNamePattern(filename));
 
         filename = "misfits.3x07.720p.hdtv.x264-tla";
-        assertTrue(ReleaseInfoParser.isTvSeries(filename));
+        assertTrue(ReleaseInfoParser.hasTvSeriesNamePattern(filename));
 
         filename = "Mad.Men.s01e01.pilot";
-        assertTrue(ReleaseInfoParser.isTvSeries(filename));
+        assertTrue(ReleaseInfoParser.hasTvSeriesNamePattern(filename));
 
         filename = "The.Hitchhiker's.Guide.to.the.Galaxy.2005.720p.BluRay.x264-REVEiLLE";
-        assertFalse(ReleaseInfoParser.isTvSeries(filename));
+        assertFalse(ReleaseInfoParser.hasTvSeriesNamePattern(filename));
     }
 
     /**

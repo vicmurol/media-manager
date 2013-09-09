@@ -1,14 +1,15 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska.editor;
 
+import lan.vandiemens.media.matroska.MkvToolNixHelper;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ResourceBundle;
-import static lan.vandiemens.media.editor.MkvPropEditCommand.*;
-import static lan.vandiemens.media.editor.MkvToolnixCommand.*;
-import lan.vandiemens.media.info.MediaInfo;
-import lan.vandiemens.media.info.MediaInfoException;
+import static lan.vandiemens.media.matroska.MkvPropEditCommand.*;
+import static lan.vandiemens.media.matroska.MkvToolnixCommand.*;
+import lan.vandiemens.media.analysis.MediaInfo;
+import lan.vandiemens.media.analysis.MediaInfoException;
 import lan.vandiemens.util.file.FileExtensionFilter;
 
 /**
@@ -85,7 +86,7 @@ public class MatroskaPropertyFixer {
 
     private static String getCommand(File file, String title) {
         StringBuilder command = new StringBuilder(1024);
-        command.append(DOUBLE_QUOTES).append(MkvToolNixUtils.getMkvPropEditExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
+        command.append(DOUBLE_QUOTES).append(MkvToolNixHelper.getMkvPropEditExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
         command.append(SPACE);
         command.append(DOUBLE_QUOTES).append(file.getAbsolutePath()).append(DOUBLE_QUOTES);
         command.append(SPACE);

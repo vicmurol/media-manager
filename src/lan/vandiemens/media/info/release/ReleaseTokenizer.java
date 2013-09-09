@@ -6,9 +6,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
-import lan.vandiemens.media.info.Codec;
-import lan.vandiemens.media.info.VideoMode;
-import lan.vandiemens.media.info.VideoSource;
+import lan.vandiemens.media.analysis.Codec;
+import lan.vandiemens.media.analysis.VideoMode;
+import lan.vandiemens.media.analysis.VideoSource;
 import lan.vandiemens.util.lang.Language;
 import org.apache.commons.validator.routines.DomainValidator;
 
@@ -492,7 +492,7 @@ public class ReleaseTokenizer {
     }
 
     private static boolean isFullTvEpisodeNumber(String value) {
-        Matcher matcher = ReleaseInfoParser.tvSeriesPattern.matcher(value);
+        Matcher matcher = ReleaseInfoParser.basicTvSeriesPattern.matcher(value);
         return matcher.find();
     }
 

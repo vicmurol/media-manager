@@ -9,6 +9,7 @@ import org.apache.commons.lang3.text.WordUtils;
  */
 public class ReleaseInfo {
 
+    protected ReleaseGenre genre = ReleaseGenre.GENERIC_VIDEO;
     protected String title = null;
     protected String originalTitle = null;
     protected String ripper = null;
@@ -20,13 +21,16 @@ public class ReleaseInfo {
     protected String webSource = null;
     protected int year = -1;
 
+    public ReleaseInfo(String title) {
+        this.title = title;
+    }
+
+    public ReleaseGenre getGenre() {
+        return genre;
+    }
 
     public int getYear() {
         return year;
-    }
-
-    public boolean isReleaseDateKnown() {
-        return year > 0;
     }
 
     public void setYear(int year) {
@@ -68,7 +72,7 @@ public class ReleaseInfo {
     public String getFormattedTitle() {
         StringBuilder titleBuilder = new StringBuilder();
         titleBuilder.append(isTitleCapitalized() ? title : WordUtils.capitalize(title));
-        if (isReleaseDateKnown()) {
+        if (year > 0) {
             titleBuilder.append(" (").append(year).append(")");
         }
 
@@ -133,5 +137,9 @@ public class ReleaseInfo {
             return false;
         }
         return (info2.getTitle().equalsIgnoreCase(title) && info2.getYear() == year);
+    }
+
+    public boolean hasCompleteBasicInfo() {
+        return true; // Title suffices
     }
 }

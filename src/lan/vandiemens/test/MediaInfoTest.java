@@ -1,7 +1,7 @@
 package lan.vandiemens.test;
 
 import java.io.File;
-import lan.vandiemens.media.info.MediaInfo;
+import lan.vandiemens.media.analysis.MediaInfo;
 import lan.vandiemens.media.info.track.Track;
 import nu.xom.Builder;
 import nu.xom.Document;

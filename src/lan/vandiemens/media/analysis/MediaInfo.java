@@ -1,4 +1,4 @@
-package lan.vandiemens.media.info;
+package lan.vandiemens.media.analysis;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -610,7 +610,7 @@ public class MediaInfo {
     private void parse(File mediaFile) throws MediaInfoException {
         System.out.println("Parsing \"" + mediaFile.getName() + "\" media information...");
         parseOriginalLanguage(mediaFile);
-        parse(getXmlMediaInfo(mediaFile));
+        parse(getMediaInfoAsXmlDocument(mediaFile));
     }
 
     private void parseOriginalLanguage(File mediaFile) {
@@ -620,8 +620,8 @@ public class MediaInfo {
         System.out.println("Original language: " + originalLanguage.getLanguageName());
     }
 
-    private Document getXmlMediaInfo(File mediaFile) throws MediaInfoException {
-        String[] commandArray = new String[]{MediaInfoHelper.getMediaInfoExecutable().getAbsolutePath(),
+    private Document getMediaInfoAsXmlDocument(File mediaFile) throws MediaInfoException {
+        String[] commandArray = new String[]{MediaInfoHelper.getMediaInfoCliExecutable().getAbsolutePath(),
             XML_OUTPUT_OPTION,
             mediaFile.getAbsolutePath()};
         BufferedReader reader = null;
@@ -814,7 +814,7 @@ public class MediaInfo {
         track.setFormatInfo(element == null ? null : element.getValue());
         element = trackElement.getFirstChildElement("Codec_ID");
         track.setCodecId(element.getValue());
-        element = trackElement.getFirstChildElement("Channel_s_");
+        element = trackElement.getFirstChildElement("Channel_count");
         Matcher channelsMatcher = AudioTrack.channelsPattern.matcher(element.getValue());
         if (channelsMatcher.matches()) {
             track.setChannelCount(Integer.parseInt(channelsMatcher.group("channels")));
@@ -883,10 +883,11 @@ public class MediaInfo {
         return normalizedTitle.contains("forced") || normalizedTitle.contains("forzados");
     }
 
-    public void setVideoTrackTitle(String formattedTitle) {
+    public void setVideoTrackTitle(String title) {
         for (int i = 0; i < tracks.length; i++) {
             if (tracks[i].getType() == TrackType.VIDEO) {
-                ((VideoTrack) tracks[i]).setTitle(formattedTitle);
+                ((VideoTrack) tracks[i]).setTitle(title);
+                break;
             }
         }
     }

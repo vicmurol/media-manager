@@ -1,4 +1,4 @@
-package lan.vandiemens.media.info;
+package lan.vandiemens.media.analysis;
 
 /**
  *

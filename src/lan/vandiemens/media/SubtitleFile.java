@@ -80,7 +80,7 @@ public class SubtitleFile extends SubtitleTrack {
     public String getName() {
         return file.getName();
     }
-    
+
     public String getAbsolutePath() {
         return file.getAbsolutePath();
     }
@@ -121,9 +121,6 @@ public class SubtitleFile extends SubtitleTrack {
      *         for the given media file, <code>false</code> otherwise
      */
     public boolean correspondsTo(MediaFile mediaFile) {
-        if (releaseInfo == null) {
-            return false;
-        }
         return releaseInfo.equalsBasicInfoIgnoreSceneGroup(mediaFile.getReleaseInfo());
     }
 

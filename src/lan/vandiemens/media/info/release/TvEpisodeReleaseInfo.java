@@ -13,16 +13,23 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
     private int episodeNumber = -1;
 
 
+    public TvEpisodeReleaseInfo(String showTitle, int season, int episode) {
+        super(showTitle);
+        this.season = season;
+        episodeNumber = episode;
+        genre = ReleaseGenre.TV_SERIES;
+    }
+
     public String getEpisodeTitle() {
         return episodeTitle;
     }
 
-    public boolean isEpisodeTitleKnown() {
+    public boolean hasEpisodeTitle() {
         return episodeTitle != null;
     }
 
-    public void setEpisodeTitle(String name) {
-        episodeTitle = name;
+    public void setEpisodeTitle(String title) {
+        episodeTitle = title;
     }
 
     public int getSeason() {
@@ -51,7 +58,7 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         titleBuilder.append(episode > 9 ? "x" : "x0");
         titleBuilder.append(episode);
         titleBuilder.append("]");
-        if (isEpisodeTitleKnown()) {
+        if (hasEpisodeTitle()) {
             titleBuilder.append(" ").append(isTitleCapitalized() ? episodeTitle : WordUtils.capitalize(episodeTitle));
         }
 
@@ -76,5 +83,10 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         return (tvSeriesInfo2.getTitle().equalsIgnoreCase(title)
                 && tvSeriesInfo2.getSeason() == season
                 && tvSeriesInfo2.getEpisodeNumber() == episodeNumber);
+    }
+
+    @Override
+    public boolean hasCompleteBasicInfo() {
+        return hasEpisodeTitle();
     }
 }

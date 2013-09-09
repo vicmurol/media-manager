@@ -1,21 +1,29 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska.editor;
 
-import java.io.BufferedReader;
+import lan.vandiemens.media.matroska.MkvPropEditCommand;
+import lan.vandiemens.media.matroska.Command;
+import lan.vandiemens.media.matroska.MkvToolNixHelper;
+import lan.vandiemens.media.matroska.MkvMergeCommand;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import lan.vandiemens.media.MediaFile;
 import lan.vandiemens.media.SubtitleFile;
-import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvMergeExecutable;
-import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvPropEditExecutable;
-import static lan.vandiemens.media.editor.MkvToolNixUtils.getMkvPropEditPath;
-import static lan.vandiemens.media.info.MediaInfoHelper.getMediaInfoExecutable;
+import static lan.vandiemens.media.matroska.MkvToolNixHelper.*;
+import static lan.vandiemens.media.analysis.MediaInfoHelper.*;
 import lan.vandiemens.util.file.FileExtensionFilter;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
+ * An application for editing Matroska media files to my liking by using the
+ * MkvToolNix project command line tools.
+ * <p>
+ * Specifically, it removes unwanted tracks from movies and TV series episodes
+ * based on their type, language, and other available information. Also, it
+ * rearranges the wanted tracks and generates their title following a specific
+ * name pattern. In addition, default and forced track flags are applied as
+ * appropriate.
  *
  * @author vmurcia
  */
@@ -62,8 +70,8 @@ public class MatroskaEditor {
             }
         }
 
-        File moviesDir = new File(args[args.length - 1]);
-        MatroskaEditor.process(moviesDir);
+        File moviesFolder = new File(args[args.length - 1]);
+        MatroskaEditor.process(moviesFolder);
     }
 
     /**
@@ -78,12 +86,13 @@ public class MatroskaEditor {
         checkIfValidDirectory(folder);
 
         MediaFile[] mediaFiles = getEditableMediaFiles(folder);
+        fixCommonMetadataErrors(mediaFiles);
         if (mediaFiles.length == 0) {
             System.out.println("No valid media files to edit!");
             return;
         }
         SubtitleFile[] subtitleFiles = getSupportedSubtitleFiles(folder);
-        fixWrongSubtitleFiles(subtitleFiles);
+        fixCommonSubtitleEncodingErrors(subtitleFiles);
         map(mediaFiles, subtitleFiles);
 
         mediaFiles = discardIncomplete(mediaFiles);
@@ -98,48 +107,38 @@ public class MatroskaEditor {
         checkIfMkvToolNixIsInstalled();
     }
 
-    private static void checkIfValidDirectory(File folder) {
-        if (folder == null) {
-            throw new IllegalArgumentException(folder + " can't be null!");
+    private static void checkIfMediaInfoIsInstalled() {
+        System.out.println("Checking if MediaInfo is installed on this system...");
+        if (isMediaInfoInstalled()) {
+            System.out.println("> MediaInfo found: " + getMediaInfoCliExecutablePath());
+            System.out.println(""); // Vertical separation
+        } else {
+            throw new RuntimeException("MediaInfo not found: " + getMediaInfoCliExecutablePath());
         }
-        if (!folder.exists()) {
-            throw new IllegalArgumentException(folder + " doesn't exist!");
-        }
-        if (!folder.isDirectory()) {
-            throw new IllegalArgumentException(folder + " is not a directory!");
-        }
-        System.out.println("Media folder: " + folder.getAbsolutePath());
     }
 
     private static void checkIfMkvToolNixIsInstalled() {
         System.out.println("Checking if MKVToolNix is installed on this system...");
-        System.out.print("Looking for " + getMkvMergeExecutable().getAbsolutePath() + "... ");
-        System.out.println(getMkvMergeExecutable().exists() ? "Found" : "Not found");
-        System.out.print("Looking for " + getMkvPropEditPath() + "... ");
-        System.out.println(getMkvPropEditExecutable().exists() ? "Found" : "Not found");
-        if (getMkvMergeExecutable().exists() && getMkvPropEditExecutable().exists()) {
-            System.out.println("> MKVToolNix found\n");
+        if (isMkvToolNixInstalled()) {
+            System.out.println("> MKVToolNix found: " + getMkvToolNixInstallFolder());
+            System.out.println(""); // Vertical separation
         } else {
-            throw new RuntimeException("MkvToolNix not found");
+            throw new RuntimeException("MkvToolNix not found: " + getMkvToolNixInstallFolder());
         }
     }
 
-    private static void checkIfMediaInfoIsInstalled() {
-        System.out.println("Checking if MediaInfo is installed on this system...");
-        System.out.print("Looking for " + getMediaInfoExecutable().getAbsolutePath() + "... ");
-        System.out.println(getMediaInfoExecutable().exists() ? "Found" : "Not found");
-        if (getMediaInfoExecutable().exists()) {
-            System.out.println("> MediaInfo found\n");
-        } else {
-            throw new RuntimeException("MediaInfo not found");
+    private static void checkIfValidDirectory(File candidate) {
+        if (!candidate.isDirectory()) {
+            throw new IllegalArgumentException(candidate + " is not a existing directory!");
         }
+        System.out.println("Media folder: " + candidate.getAbsolutePath());
     }
 
     private static void runWithMkvToolNix(Command[] commands) {
         for (Command command : commands) {
             System.out.println("Command: " + command);
             try {
-                if (execute(command)) {
+                if (MkvToolNixHelper.execute(command)) {
                     System.out.println(command.getOutputFile().getName() + " processed successfully");
                     performPostCommandTasks(command);
                 } else {
@@ -178,65 +177,13 @@ public class MatroskaEditor {
         System.out.println("MatroskaEditor v" + versionNumber + " Build " + buildNumber);
     }
 
-    /**
-     * Runs a platform-dependent command to edit Matroska videos.
-     *
-     * @param command the command to be executed
-     * @return <code>true</code> if the command was successfully executed,
-     *         <code>false</code> otherwise
-     */
-    private static boolean execute(Command command) throws IOException {
-        System.out.println("Processing...");
-
-        Process process;
-        BufferedReader reader = null;
-        boolean result = false;
-        try {
-            process = new ProcessBuilder(command.toList()).start();
-            reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-            int exitValue = process.waitFor();
-            switch (exitValue) {
-                case 0:
-                    System.out.println("Muxing/Edition has completed successfully");
-                    result = true;
-                    break;
-                case 1:
-                    System.out.println("Some issues occurred during the muxing/edition process!");
-                    System.out.println("Check both the warnings and the resulting file");
-                    result = true;
-                    break;
-                case 2:
-                    System.out.println("ERROR: Muxing/Edition operation has been aborted!");
-                    break;
-                default: // Couldn't happen
-                    System.out.println("Exited with error code: " + exitValue);
-            }
-        } catch (IOException | InterruptedException ex) {
-            System.out.println(ex.getClass());
-            System.out.println(ex.getMessage());
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
-        }
-
-        return result;
-    }
-
     @SuppressWarnings("UseSpecificCatch")
     private static MediaFile[] getEditableMediaFiles(File folder) {
-        File[] containerFiles = folder.listFiles(new FileExtensionFilter(supportedVideoFileFormats));
-        if (containerFiles.length == 0) {
-            return new MediaFile[0];
-        }
-        ArrayList<MediaFile> mediaFiles = new ArrayList<>(containerFiles.length);
-        System.out.println("Candidate media files:");
-        System.out.println(ArrayUtils.toString(containerFiles));
-        for (File file : containerFiles) {
+        FileExtensionFilter videoFilter = new FileExtensionFilter(supportedVideoFileFormats);
+        File[] videoFiles = folder.listFiles(videoFilter);
+        List<MediaFile> mediaFiles = new ArrayList<>(videoFiles.length);
+        for (File file : videoFiles) {
+            System.out.println("Candidate video file: " + file.getName());
             try {
                 mediaFiles.add(new MediaFile(file));
                 System.out.println("Video file: " + file.getName() + "... parsed");
@@ -245,9 +192,15 @@ public class MatroskaEditor {
                 System.out.println("Reason: " + ex.getMessage());
             }
         }
-        System.out.println();
+        System.out.println(); // Vertical separator
 
         return mediaFiles.toArray(new MediaFile[mediaFiles.size()]);
+    }
+
+    private static void fixCommonMetadataErrors(MediaFile[] mediaFiles) {
+        for (MediaFile mediaFile : mediaFiles) {
+            mediaFile.fixCommonMetadataErrors();
+        }
     }
 
     private static SubtitleFile[] getSupportedSubtitleFiles(File folder) {
@@ -271,13 +224,14 @@ public class MatroskaEditor {
         return subtitleFiles.toArray(new SubtitleFile[subtitleFiles.size()]);
     }
 
-    private static void fixWrongSubtitleFiles(SubtitleFile[] subtitleFiles) {
+    private static void fixCommonSubtitleEncodingErrors(SubtitleFile[] subtitleFiles) {
         for (SubtitleFile subtitleFile : subtitleFiles) {
             if (subtitleFile.isTextBased()) {
                 try {
                     subtitleFile.fixEncoding();
                 } catch (IOException ex) {
                     System.out.println("Encoding could not be fixed for " + subtitleFile.getName());
+                    System.out.println("Reason: " + ex.getMessage());
                 }
             }
         }

@@ -1,4 +1,3 @@
-* Parse external SubRip subtitle files to add UTF-8 BOM if needed
 * Parse Kingdom-Release track id tags
 * Add GUI for dir selection and history
 * Add logging capabilities

@@ -1,8 +1,8 @@
 package lan.vandiemens.media.cataloguer;
 
 import java.io.*;
-import lan.vandiemens.media.info.MediaInfoHelper;
-import static lan.vandiemens.media.info.MediaInfoHelper.getMediaInfoExecutable;
+import lan.vandiemens.media.analysis.MediaInfoHelper;
+import static lan.vandiemens.media.analysis.MediaInfoHelper.getMediaInfoCliExecutable;
 import lan.vandiemens.media.manager.VersionInfo;
 import lan.vandiemens.util.file.FileExtensionFilter;
 import lan.vandiemens.util.file.FileUtils;
@@ -80,7 +80,7 @@ public class Cataloguer {
     public void start() {
 
         // Check if MediaInfo is installed on this system
-        if (getMediaInfoExecutable().exists()) {
+        if (getMediaInfoCliExecutable().exists()) {
             System.out.println("MediaInfo found\n");
         } else {
             System.err.println("MediaInfo not found!");
@@ -198,7 +198,7 @@ public class Cataloguer {
         }
 
         // Save media container information
-        String[] commandArray = new String[]{ MediaInfoHelper.getMediaInfoExecutable().getAbsolutePath(),
+        String[] commandArray = new String[]{ MediaInfoHelper.getMediaInfoCliExecutable().getAbsolutePath(),
                                               containerFile.getAbsolutePath()};
 
         Process process; // The process to be spawned

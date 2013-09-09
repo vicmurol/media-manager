@@ -1,4 +1,4 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
     @Override
     public String toString() {
         StringBuilder command = new StringBuilder(DEFAULT_COMMAND_LENGTH);
-        command.append(DOUBLE_QUOTES).append(MkvToolNixUtils.getMkvPropEditExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
+        command.append(DOUBLE_QUOTES).append(MkvToolNixHelper.getMkvPropEditExecutable().getAbsolutePath()).append(DOUBLE_QUOTES);
         command.append(SPACE);
         command.append(DOUBLE_QUOTES).append(inputFile.getAbsolutePath()).append(DOUBLE_QUOTES);
         command.append(SPACE);
@@ -112,7 +112,7 @@ public class MkvPropEditCommand extends MkvToolnixCommand {
         List<String> result = new ArrayList<>(2);
 
         // Add command
-        result.add(MkvToolNixUtils.getMkvPropEditExecutable().getAbsolutePath());
+        result.add(MkvToolNixHelper.getMkvPropEditExecutable().getAbsolutePath());
 
         // Add arguments
         StringBuilder argumentSequence = new StringBuilder(DEFAULT_COMMAND_LENGTH);

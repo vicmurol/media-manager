@@ -1,4 +1,4 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska;
 
 import java.io.File;
 import java.util.Date;
@@ -9,7 +9,7 @@ import lan.vandiemens.media.info.release.ReleaseInfo;
  *
  * @author vmurcia
  */
-abstract class MkvToolnixCommand implements Command {
+public abstract class MkvToolnixCommand implements Command {
 
     public static String DOUBLE_QUOTES = "\"";
     public static String SPACE = " ";

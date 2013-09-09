@@ -1,6 +1,6 @@
 package lan.vandiemens.media;
 
-import lan.vandiemens.media.info.MediaInfo;
+import lan.vandiemens.media.analysis.MediaInfo;
 import lan.vandiemens.media.info.track.Track;
 import lan.vandiemens.media.info.track.TrackType;
 import lan.vandiemens.util.lang.Language;

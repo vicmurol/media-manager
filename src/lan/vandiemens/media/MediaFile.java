@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
-import lan.vandiemens.media.info.MediaInfo;
-import lan.vandiemens.media.info.MediaInfoException;
+import lan.vandiemens.media.analysis.MediaInfo;
+import lan.vandiemens.media.analysis.MediaInfoException;
+import lan.vandiemens.media.info.release.ReleaseGenre;
 import lan.vandiemens.media.info.release.ReleaseInfo;
-import lan.vandiemens.media.info.release.TvEpisodeReleaseInfo;
 import lan.vandiemens.media.info.track.SubtitleTrackType;
 import lan.vandiemens.util.lang.Language;
 
@@ -20,14 +20,11 @@ public class MediaFile {
     private static final int BLURAY_SIZE_THRESHOLD_IN_GIBIS = 20; // Measured in GiB
     private File file = null;
     private MediaInfo mediaInfo = null;
-    private ReleaseInfo releaseInfo = null;
+    private ReleaseInfo release = null;
     private ArrayList<SubtitleFile> addedSubtitles = new ArrayList<>(2);
     private boolean isConsolidated = false;
 
     public MediaFile(File file) throws IOException, MediaInfoException {
-        if (file == null) {
-            throw new NullPointerException();
-        }
         if (!file.exists()) {
             throw new IllegalArgumentException(file + " doesn't exist!");
         }
@@ -35,13 +32,11 @@ public class MediaFile {
             throw new IllegalArgumentException(file + " is a directory!");
         }
 
-        // Check if the given file is truly a media file
-        // Si no, sólo existen los campos XML: complete name y file size
+        // MediaInfo only provides file name and size info fields if the file analyzed is not a media file
         mediaInfo = new MediaInfo(file);
         System.out.println("Media information has been generated\n");
-        releaseInfo = ReleaseInfoParser.parse(file);
+        release = ReleaseInfoParser.parse(file);
         System.out.println("Release information has been generated\n");
-        fixWrongInfo();
 
         this.file = file;
     }
@@ -55,11 +50,11 @@ public class MediaFile {
     }
 
     public ReleaseInfo getReleaseInfo() {
-        return releaseInfo;
+        return release;
     }
 
     public String getFormattedTitle() {
-        return releaseInfo.getFormattedTitle();
+        return release.getFormattedTitle();
     }
 
     public void addSubtitle(SubtitleFile subtitleFile) {
@@ -156,6 +151,12 @@ public class MediaFile {
         }
     }
 
+    public void fixCommonMetadataErrors() {
+        fixUnknownAudioTracks();
+        fixVideoTrackTitle();
+        fixUnknownVideoSource();
+    }
+
     /**
      * NOTE: Must be called after <code>disableUnwantedTracks()</code>.
      * @return <code>true</code> if no track is left over and all of them are
@@ -169,8 +170,12 @@ public class MediaFile {
         }
     }
 
+    public boolean isMovie() {
+        return release.getGenre() == ReleaseGenre.MOVIE;
+    }
+
     public boolean isTvSeries() {
-        return releaseInfo instanceof TvEpisodeReleaseInfo;
+        return release.getGenre() == ReleaseGenre.TV_SERIES;
     }
 
     public boolean meetsLanguageRequirements() {
@@ -211,39 +216,46 @@ public class MediaFile {
     public boolean meetsReleaseInfoRequirements() {
         System.out.print("Checking release information requirements for \"" + file.getName() + "\"... ");
         boolean result = false;
-        if (releaseInfo == null) {
-            System.out.println("Disapproved\nRequirement not met: " + file + " has not a supported file name pattern!");
-        } else if (!(isTvSeries()) && !releaseInfo.isReleaseDateKnown()) {
-            System.out.println("Disapproved\nRequirement not met: " + file + " is a movie without year information!");
-        } else if (isTvSeries() && !((TvEpisodeReleaseInfo) releaseInfo).isEpisodeTitleKnown()) {
-            System.out.println("Disapproved\nRequirement not met: " + file + " is a TV series without episode title known!");
-        } else {
+        if (release.hasCompleteBasicInfo()) {
             System.out.println("Approved");
             result = true;
+        } else {
+            System.out.println("Disapproved");
+            System.out.println(getMissingRequirementsMessage());
         }
-
         return result;
     }
 
-    private void fixWrongInfo() {
+    private String getMissingRequirementsMessage() {
+        String message = "Requirement not met";
+        if (isMovie()) {
+            message += ": " + file + " is a movie without year information!";
+        } else if (isTvSeries()) {
+            message += ": " + file + " is a TV series episode without episode title information!";
+        } else {
+            message += " for " + release.getGenre() + ": " + file;
+        }
+        return message;
+    }
+
+    private void fixUnknownAudioTracks() {
         // Consider undefined audio tracks as Spanish for Spanish movies
         if (mediaInfo.getOriginalLanguage() == Language.SPANISH && mediaInfo.getAudioTrackCount() == 1 && !mediaInfo.hasSpanishAudioTrack()) {
             mediaInfo.setAudioAsSpanish();
-        }
-        if (releaseInfo == null) { // TODO: Release info shouldn't never be null
-            return;
-        }
-        fixVideoTrackTitle();
-        // Try to guess media source if unknown
-        if (releaseInfo.getVideoSource() == null && releaseInfo.isVideoQualityKnown() && releaseInfo.getVideoQuality().startsWith("1080")) {
-            releaseInfo.setVideoSource(mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS ? "BDRip" : "BluRay");
-        // Correct media source if incorrect
-        } else if (releaseInfo.getVideoSource() != null && releaseInfo.getVideoSource().equalsIgnoreCase("bluray") && mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS) {
-            releaseInfo.setVideoSource("BDRip");
         }
     }
 
     private void fixVideoTrackTitle() {
         mediaInfo.setVideoTrackTitle(getFormattedTitle());
+    }
+
+    private void fixUnknownVideoSource() {
+        // Try to guess media source if unknown
+        if (release.getVideoSource() == null && release.isVideoQualityKnown() && release.getVideoQuality().startsWith("1080")) {
+            release.setVideoSource(mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS ? "BDRip" : "Blu-ray");
+        // Correct media source if incorrect
+        } else if (release.getVideoSource() != null && release.getVideoSource().equalsIgnoreCase("bluray") && mediaInfo.getFileSizeInGigas() < BLURAY_SIZE_THRESHOLD_IN_GIBIS) {
+            release.setVideoSource("BDRip");
+        }
     }
 }

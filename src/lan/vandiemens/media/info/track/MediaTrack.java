@@ -1,6 +1,6 @@
 package lan.vandiemens.media.info.track;
 
-import static lan.vandiemens.media.editor.MkvPropEditCommand.*;
+import static lan.vandiemens.media.matroska.MkvPropEditCommand.*;
 import lan.vandiemens.util.lang.Language;
 
 

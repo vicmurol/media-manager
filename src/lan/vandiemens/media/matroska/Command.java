@@ -1,4 +1,4 @@
-package lan.vandiemens.media.editor;
+package lan.vandiemens.media.matroska;
 
 import java.io.File;
 import java.util.List;
