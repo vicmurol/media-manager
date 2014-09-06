@@ -6,7 +6,8 @@ package lan.vandiemens.media.info.track;
  */
 public class SubtitleTrack extends MediaTrack {
 
-    protected SubtitleTrackType subtitleType = SubtitleTrackType.COMPLETE;
+    protected SubtitleTrackType subtitleType = SubtitleTrackType.NORMAL;
+    protected CompressionAlgorithm compressionMode = CompressionAlgorithm.NONE;
 
     @Override
     public TrackType getType() {
@@ -17,12 +18,40 @@ public class SubtitleTrack extends MediaTrack {
         return codecId.startsWith("S_TEXT");
     }
 
-    public boolean isCompleteOrForHearingImpaired() {
-        return isComplete() || isForHearingImpaired();
+    @Override
+    public String getAssociatedFileExtension() {
+        String extension;
+        switch (codecId) {
+            case "S_TEXT/UTF8":
+                extension = "srt";
+                break;
+            case "S_TEXT/SSA":
+                extension = "ssa";
+                break;
+            case "S_TEXT/ASS":
+                extension = "ass";
+                break;
+            case "S_TEXT/USF":
+                extension = "usf";
+                break;
+            case "S_VOBSUB":
+                extension = "sub";
+                break;
+            case "S_HDMV/PGS":
+                extension = "sup";
+                break;
+            default:
+                extension = UNKNOWN_FILE_EXTENSION;
+        }
+        return extension;
     }
 
     public boolean isComplete() {
-        return subtitleType == SubtitleTrackType.COMPLETE;
+        return isNormal() || isForHearingImpaired();
+    }
+
+    public boolean isNormal() {
+        return subtitleType == SubtitleTrackType.NORMAL;
     }
 
     public boolean isForHearingImpaired() {
@@ -126,5 +155,19 @@ public class SubtitleTrack extends MediaTrack {
         }
 
         return name.toString();
+    }
+
+    public CompressionAlgorithm getCompressionMode() {
+        return compressionMode;
+    }
+    
+    public void setCompressionMode(String algorithm) {
+        if (algorithm == null) {
+            compressionMode = CompressionAlgorithm.NONE;
+        } else if (algorithm.equalsIgnoreCase("zlib")) {
+            compressionMode = CompressionAlgorithm.ZLIB;
+        } else {
+            compressionMode = CompressionAlgorithm.UNKNOWN;
+        }
     }
 }

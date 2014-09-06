@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediainfo version="0.7.67">
+<File>
+<track type="General">
+<Unique_ID>247506894932575080614780269092122111778 (0xBA341812F5915108A3DCFD0CBBFFAF22)</Unique_ID>
+<Complete_name>Hannibal.S01E01.Apéritif.1080p.BluRay.DTS.x264-NTb.mkv</Complete_name>
+<Format>Matroska</Format>
+<Format_version>Version 2</Format_version>
+<File_size>7.44 GiB</File_size>
+<Duration>43mn 17s</Duration>
+<Overall_bit_rate>24.6 Mbps</Overall_bit_rate>
+<Encoded_date>UTC 2013-09-23 11:33:54</Encoded_date>
+<Writing_application>mkvmerge v6.4.1 (&apos;Omega Point&apos;) built on Sep 16 2013 22:05:10</Writing_application>
+<Writing_library>libebml v1.3.0 + libmatroska v1.4.1</Writing_library>
+</track>
+
+<track type="Video">
+<ID>1</ID>
+<Format>AVC</Format>
+<Format_Info>Advanced Video Codec</Format_Info>
+<Format_profile>High@L4.1</Format_profile>
+<Format_settings__CABAC>Yes</Format_settings__CABAC>
+<Format_settings__ReFrames>4 frames</Format_settings__ReFrames>
+<Codec_ID>V_MPEG4/ISO/AVC</Codec_ID>
+<Duration>43mn 17s</Duration>
+<Bit_rate>22.6 Mbps</Bit_rate>
+<Width>1 920 pixels</Width>
+<Height>1 080 pixels</Height>
+<Display_aspect_ratio>16:9</Display_aspect_ratio>
+<Frame_rate_mode>Constant</Frame_rate_mode>
+<Frame_rate>24.000 fps</Frame_rate>
+<Color_space>YUV</Color_space>
+<Chroma_subsampling>4:2:0</Chroma_subsampling>
+<Bit_depth>8 bits</Bit_depth>
+<Scan_type>Progressive</Scan_type>
+<Bits__Pixel_Frame_>0.454</Bits__Pixel_Frame_>
+<Stream_size>6.84 GiB (92%)</Stream_size>
+<Writing_library>x264 core 138 r2358kMod 9e941d1</Writing_library>
+<Encoding_settings>cabac=1 / ref=4 / deblock=1:-3:-3 / analyse=0x3:0x133 / me=umh / subme=10 / psy=1 / fade_compensate=0.00 / psy_rd=1.10:0.00 / mixed_ref=1 / me_range=48 / chroma_me=1 / trellis=2 / 8x8dct=1 / cqm=0 / deadzone=21,11 / fast_pskip=0 / chroma_qp_offset=-2 / threads=12 / lookahead_threads=2 / sliced_threads=0 / nr=0 / decimate=1 / interlaced=0 / bluray_compat=0 / constrained_intra=0 / bframes=7 / b_pyramid=2 / b_adapt=2 / b_bias=0 / direct=3 / weightb=1 / open_gop=0 / weightp=2 / keyint=240 / keyint_min=24 / scenecut=40 / intra_refresh=0 / rc_lookahead=60 / rc=crf / mbtree=0 / crf=18.0000 / qcomp=0.60 / qpmin=0 / qpmax=69 / qpstep=4 / vbv_maxrate=62500 / vbv_bufsize=78125 / crf_max=0.0 / nal_hrd=none / ip_ratio=1.30 / pb_ratio=1.20 / aq=1:0.85</Encoding_settings>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio">
+<ID>2</ID>
+<Format>DTS</Format>
+<Format_Info>Digital Theater Systems</Format_Info>
+<Mode>16</Mode>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_DTS</Codec_ID>
+<Duration>43mn 17s</Duration>
+<Bit_rate_mode>Constant</Bit_rate_mode>
+<Bit_rate>1 509 Kbps</Bit_rate>
+<Channel_s_>6 channels</Channel_s_>
+<Channel_positions>Front: L C R, Side: L R, LFE</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>24 bits</Bit_depth>
+<Compression_mode>Lossy</Compression_mode>
+<Stream_size>467 MiB (6%)</Stream_size>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="1">
+<ID>3</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="2">
+<ID>4</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Menu">
+<_00_00_00000>en:00:00:00.000</_00_00_00000>
+<_00_11_10375>en:00:11:10.375</_00_11_10375>
+<_00_16_16250>en:00:16:16.250</_00_16_16250>
+<_00_22_37292>en:00:22:37.292</_00_22_37292>
+<_00_28_32708>en:00:28:32.708</_00_28_32708>
+<_00_38_19167>en:00:38:19.167</_00_38_19167>
+</track>
+
+</File>
+</Mediainfo>
+

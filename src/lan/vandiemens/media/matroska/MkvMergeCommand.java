@@ -2,6 +2,7 @@ package lan.vandiemens.media.matroska;
 
 import java.util.ArrayList;
 import java.util.List;
+import lan.vandiemens.media.AudioFile;
 import lan.vandiemens.media.MediaFile;
 import lan.vandiemens.media.SubtitleFile;
 import lan.vandiemens.media.info.track.Track;
@@ -14,27 +15,27 @@ import lan.vandiemens.media.info.track.VideoTrack;
  */
 public class MkvMergeCommand extends MkvToolnixCommand {
 
-    private static String TRACK_ORDER_OPTION = "--track-order";
-    private static String LANGUAGE_OPTION = "--language";
-    private static String DEFAULT_TRACK_OPTION = "--default-track";
-    private static String FORCED_TRACK_OPTION = "--forced-track";
-    private static String TRACK_NAME_OPTION = "--track-name";
-    private static String OUTPUT_OPTION = "-o";
-    private static String TITLE_OPTION = "--title";
-    private static String AUDIO_TRACKS_OPTION = "-a";
-    private static String NO_AUDIO_OPTION = "-A";
-    private static String VIDEO_TRACKS_OPTION = "-d";
-    private static String DISPLAY_DIMENSIONS_OPTION = "--display-dimensions";
-    private static String NO_VIDEO_OPTION = "-D";
-    private static String SUBTITLE_TRACKS_OPTION = "-s";
-    private static String NO_SUBTITLES_OPTION = "-S";
-    private static String NO_TRACK_TAGS_OPTION = "-T";
-    private static String NO_GLOBAL_TAGS_OPTION = "--no-global-tags";
-    private static String NO_CHAPTERS_OPTION = "--no-chapters";
-    private static int DEFAULT_TRACK_DESCRIPTION_LENGTH = 200;
+    private static final String MAIN_FILE_ID = "0";
+    private static final String TRACK_ORDER_OPTION = "--track-order";
+    private static final String LANGUAGE_OPTION = "--language";
+    private static final String DEFAULT_TRACK_OPTION = "--default-track";
+    private static final String FORCED_TRACK_OPTION = "--forced-track";
+    private static final String TRACK_NAME_OPTION = "--track-name";
+    private static final String OUTPUT_OPTION = "-o";
+    private static final String TITLE_OPTION = "--title";
+    private static final String AUDIO_TRACKS_OPTION = "-a";
+    private static final String NO_AUDIO_OPTION = "-A";
+    private static final String VIDEO_TRACKS_OPTION = "-d";
+    private static final String DISPLAY_DIMENSIONS_OPTION = "--display-dimensions";
+    private static final String NO_VIDEO_OPTION = "-D";
+    private static final String SUBTITLE_TRACKS_OPTION = "-s";
+    private static final String NO_SUBTITLES_OPTION = "-S";
+    private static final String NO_TRACK_TAGS_OPTION = "-T";
+    private static final String NO_GLOBAL_TAGS_OPTION = "--no-global-tags";
+    private static final String NO_CHAPTERS_OPTION = "--no-chapters";
+    private static final int DEFAULT_TRACK_DESCRIPTION_LENGTH = 200;
     private String[] inputDescriptions = null;
     private String trackOrder = null;
-    private boolean hasChapters = false;
 
     public MkvMergeCommand(MediaFile mediaFile) {
         mediaFile.consolidate();
@@ -42,7 +43,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         inputFile = mediaFile.getMainFile();
         outputFile = generateOutputMkvFile(mediaFile);
         inputDescriptions = getInputDescriptions(mediaFile);
-        hasChapters = mediaFile.hasChapters();
+        trackOrder = getTrackOrder(mediaFile);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         List<String> result = new ArrayList<>(4);
 
         // Add command
-        result.add(MkvToolNixHelper.getMkvMergeExecutable().getAbsolutePath());
+        result.add(MkvToolNixHelper.getMkvMergeExePath());
 
         // Add output option
         result.add(OUTPUT_OPTION);
@@ -105,55 +106,50 @@ public class MkvMergeCommand extends MkvToolnixCommand {
 
     private String[] getInputDescriptions(MediaFile mediaFile) {
         String[] descriptions = new String[mediaFile.getFileCount()];
-        int subtitleIndex = 1;
-        int audioCounter = 0;
-        int audioTrackCount = mediaFile.getMediaInfo().getEnabledAudioTrackCount();
+        int fileId = 1; // Main video file is always FID=0, as its video track is always the first one in the output file
+        int audioTrackCounter = 0;
+        int audioTrackCount = mediaFile.getMediaInfo().getEnabledInternalAudioTrackCount();
         int subtitleCounter = 0;
-        StringBuilder order = new StringBuilder();
         StringBuilder trackTypeDescription = new StringBuilder();
         StringBuilder mainDescription = new StringBuilder(200);
 
-        Track[] tracks = mediaFile.getMediaInfo().getEnabledTracks();
-        for (int i = 0; i < tracks.length; i++) {
-//            System.out.println(tracks[i].toXml());
-            switch (tracks[i].getType()) {
-                case VIDEO: // First track, as well as only video track
-                    mainDescription.append(getDescription(tracks[i]));
+        Track[] tracks = mediaFile.getEnabledTracks();
+        for (Track track : tracks) {
+            switch (track.getType()) {
+                case VIDEO: // First and only video track
+                    mainDescription.append(getDescription(track));
                     mainDescription.append(SPACE);
-                    order.append("0");
                     trackTypeDescription.append(DOUBLE_QUOTES).append(VIDEO_TRACKS_OPTION).append(DOUBLE_QUOTES);
                     trackTypeDescription.append(SPACE);
-                    trackTypeDescription.append(DOUBLE_QUOTES).append((tracks[i]).getTrackId()).append(DOUBLE_QUOTES);
+                    trackTypeDescription.append(DOUBLE_QUOTES).append(track.getTrackId()).append(DOUBLE_QUOTES);
                     trackTypeDescription.append(SPACE);
                     break;
                 case AUDIO:
-                    mainDescription.append(getDescription(tracks[i]));
-                    mainDescription.append(SPACE);
-                    order.append(COMMA);
-                    order.append("0");
-                    if (audioCounter++ > 0) {
-                        trackTypeDescription.append(COMMA);
+                    if (track.isExternal()) {
+                        descriptions[fileId++] = getDescription((AudioFile) track);
                     } else {
-                        trackTypeDescription.append(DOUBLE_QUOTES).append(AUDIO_TRACKS_OPTION).append(DOUBLE_QUOTES);
-                        trackTypeDescription.append(SPACE);
-                        trackTypeDescription.append(DOUBLE_QUOTES);
-                    }
-                    trackTypeDescription.append(tracks[i].getTrackId());
-                    if (audioCounter == audioTrackCount) { // Last audio track
-                        trackTypeDescription.append(DOUBLE_QUOTES);
-                        trackTypeDescription.append(SPACE);
+                        mainDescription.append(getDescription(track));
+                        mainDescription.append(SPACE);
+                        if (audioTrackCounter++ > 0) {
+                            trackTypeDescription.append(COMMA);
+                        } else {
+                            trackTypeDescription.append(DOUBLE_QUOTES).append(AUDIO_TRACKS_OPTION).append(DOUBLE_QUOTES);
+                            trackTypeDescription.append(SPACE);
+                            trackTypeDescription.append(DOUBLE_QUOTES);
+                        }
+                        trackTypeDescription.append(track.getTrackId());
+                        if (audioTrackCounter == audioTrackCount) { // Last audio track
+                            trackTypeDescription.append(DOUBLE_QUOTES);
+                            trackTypeDescription.append(SPACE);
+                        }
                     }
                     break;
                 case SUBTITLE:
-                    if (tracks[i] instanceof SubtitleFile) {
-                        descriptions[subtitleIndex] = getDescription((SubtitleFile) tracks[i]);
-                        order.append(COMMA);
-                        order.append(subtitleIndex++);
+                    if (track.isExternal()) {
+                        descriptions[fileId++] = getDescription((SubtitleFile) track);
                     } else {
-                        mainDescription.append(getDescription(tracks[i]));
+                        mainDescription.append(getDescription(track));
                         mainDescription.append(SPACE);
-                        order.append(COMMA);
-                        order.append("0");
                         if (subtitleCounter++ > 0) {
                             trackTypeDescription.append(COMMA);
                         } else {
@@ -161,14 +157,11 @@ public class MkvMergeCommand extends MkvToolnixCommand {
                             trackTypeDescription.append(SPACE);
                             trackTypeDescription.append(DOUBLE_QUOTES);
                         }
-                        trackTypeDescription.append(tracks[i].getTrackId());
+                        trackTypeDescription.append(track.getTrackId());
                     }
                     break;
                 default: // Can't happen
-                    continue;
             }
-            order.append(":");
-            order.append(tracks[i].getTrackId());
         }
         if (subtitleCounter > 0) {
             trackTypeDescription.append(DOUBLE_QUOTES);
@@ -182,7 +175,7 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         mainDescription.append(SPACE);
         mainDescription.append(DOUBLE_QUOTES).append(NO_GLOBAL_TAGS_OPTION).append(DOUBLE_QUOTES);
         mainDescription.append(SPACE);
-        if (!hasChapters) {
+        if (!mediaFile.hasChapters()) {
             mainDescription.append(DOUBLE_QUOTES).append(NO_CHAPTERS_OPTION).append(DOUBLE_QUOTES);
             mainDescription.append(SPACE);
         }
@@ -193,8 +186,87 @@ public class MkvMergeCommand extends MkvToolnixCommand {
         mainDescription.append(DOUBLE_QUOTES).append(RIGHT_PARENTHESIS).append(DOUBLE_QUOTES);
 
         descriptions[0] = mainDescription.toString();
-        trackOrder = order.toString();
         return descriptions;
+    }
+
+    /**
+     * Returns a text consisting of a comma-separated list of pairs IDs.
+     * <p>
+     * Each pair contains first the file ID (FID1) which is simply the number of
+     * the file on the command line starting at 0.
+     * The second is a track ID (TID1) from that file.
+     *
+     * @param mediaFile the media file containing the tracks whose order has to
+     *                  be described
+     * @return a track order description
+     */
+    private String getTrackOrder(MediaFile mediaFile) {
+        int fileId = 1; // Main video file is always FID=0, as its video track is always the first one in the output file
+        StringBuilder order = new StringBuilder();
+        for (Track track : mediaFile.getEnabledTracks()) {
+            switch (track.getType()) {
+                case VIDEO: // First and only video track
+                    order.append(MAIN_FILE_ID);
+                    break;
+                case AUDIO:
+                case SUBTITLE:
+                    if (track.isExternal()) {
+                        order.append(COMMA);
+                        order.append(fileId++);
+                    } else {
+                        order.append(COMMA);
+                        order.append(MAIN_FILE_ID);
+                    }
+                    break;
+                default: // Can't happen
+                    continue;
+            }
+            order.append(COLON);
+            order.append(track.getTrackId());
+        }
+
+        return order.toString();
+    }
+
+    private String getDescription(AudioFile audioFile) {
+        StringBuilder description = new StringBuilder(DEFAULT_TRACK_DESCRIPTION_LENGTH);
+        description.append(DOUBLE_QUOTES).append(LANGUAGE_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append("0:").append(audioFile.getLanguageCode()).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(TRACK_NAME_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append("0:").append(getTrackName(audioFile)).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(DEFAULT_TRACK_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append("0:").append(audioFile.isDefault() ? "yes" : "no").append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(FORCED_TRACK_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append("0:").append(audioFile.isForced() ? "yes" : "no").append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(AUDIO_TRACKS_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append("0").append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(NO_VIDEO_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(NO_SUBTITLES_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(NO_TRACK_TAGS_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(NO_GLOBAL_TAGS_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(NO_CHAPTERS_OPTION).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(LEFT_PARENTHESIS).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(audioFile.getAbsolutePath()).append(DOUBLE_QUOTES);
+        description.append(SPACE);
+        description.append(DOUBLE_QUOTES).append(RIGHT_PARENTHESIS).append(DOUBLE_QUOTES);
+
+        return description.toString();
     }
 
     private String getDescription(SubtitleFile subtitleFile) {

@@ -31,7 +31,7 @@ public class Cataloguer {
      * Nevertheless, Windows OS file system has limitations regarding characters
      * that can be used in file names, the colon being one of them.
      */
-    private boolean isSemicolonToColonEnabled = true;
+    private final boolean isSemicolonToColonEnabled = true;
     /**
      * A flag indicating that no MD5 hash will be calculated.
      */
@@ -45,9 +45,6 @@ public class Cataloguer {
     private boolean reverseModeEnabled = false;
 
     public Cataloguer(File dir) {
-        if (dir == null) {
-            throw new NullPointerException();
-        }
         if (!dir.exists()) {
             throw new IllegalArgumentException(dir + " doesn't exist!");
         }
@@ -225,7 +222,7 @@ public class Cataloguer {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Unique ID")) {
-                    continue;
+                    // Do nothing
                 } else if (line.startsWith("Complete name")) {
                     if (isTvSeries) {
                         builder.append("Complete name                            : /TV Series/");
@@ -270,7 +267,7 @@ public class Cataloguer {
                 saveMediaHashFile(desiredFile, mediaInfoFile);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             return false;
         }
 
@@ -292,6 +289,9 @@ public class Cataloguer {
         // Get info from media info file
         String containerName = FileUtils.getNameWithoutExtension(mkvFile);
         File mediaInfoFile = new File(mkvFile.getParent(), containerName + ".info.txt");
+        if (!mediaInfoFile.exists()) {
+            mediaInfoFile = new File(mkvFile.getParent(), containerName + ".mnfo");
+        }
         BufferedReader reader;
 
         try {

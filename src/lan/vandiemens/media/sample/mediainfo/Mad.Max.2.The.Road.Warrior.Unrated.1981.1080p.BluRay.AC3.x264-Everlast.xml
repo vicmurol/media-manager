@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediainfo version="0.7.67">
+<File>
+<track type="General">
+<Unique_ID>236404862769442165141548367622750936274 (0xB1D9EBA0AFED9DDC84504576A1991CD2)</Unique_ID>
+<Complete_name>Mad.Max.2.The.Road.Warrior.Unrated.1981.1080p.BluRay.AC3.x264-Everlast.mkv</Complete_name>
+<Format>Matroska</Format>
+<Format_version>Version 2</Format_version>
+<File_size>10.8 GiB</File_size>
+<Duration>1h 35mn</Duration>
+<Overall_bit_rate>16.1 Mbps</Overall_bit_rate>
+<Encoded_date>UTC 2012-01-16 05:41:07</Encoded_date>
+<Writing_application>mkvmerge v5.2.0 (&apos;I can&apos;t explain&apos;) built on Dec 18 2011 18:12:03</Writing_application>
+<Writing_library>libebml v1.2.3 + libmatroska v1.3.0</Writing_library>
+</track>
+
+<track type="Video">
+<ID>1</ID>
+<Format>AVC</Format>
+<Format_Info>Advanced Video Codec</Format_Info>
+<Format_profile>High@L4.1</Format_profile>
+<Format_settings__CABAC>Yes</Format_settings__CABAC>
+<Format_settings__ReFrames>5 frames</Format_settings__ReFrames>
+<Codec_ID>V_MPEG4/ISO/AVC</Codec_ID>
+<Duration>1h 35mn</Duration>
+<Bit_rate>15.5 Mbps</Bit_rate>
+<Width>1 920 pixels</Width>
+<Height>802 pixels</Height>
+<Display_aspect_ratio>2.40:1</Display_aspect_ratio>
+<Frame_rate_mode>Constant</Frame_rate_mode>
+<Frame_rate>23.976 fps</Frame_rate>
+<Color_space>YUV</Color_space>
+<Chroma_subsampling>4:2:0</Chroma_subsampling>
+<Bit_depth>8 bits</Bit_depth>
+<Scan_type>Progressive</Scan_type>
+<Bits__Pixel_Frame_>0.420</Bits__Pixel_Frame_>
+<Stream_size>10.1 GiB (94%)</Stream_size>
+<Writing_library>x264 core 120 r2120 0c7dab9</Writing_library>
+<Encoding_settings>cabac=1 / ref=5 / deblock=1:-3:-3 / analyse=0x3:0x113 / me=umh / subme=11 / psy=1 / psy_rd=1.00:0.10 / mixed_ref=1 / me_range=64 / chroma_me=1 / trellis=2 / 8x8dct=1 / cqm=0 / deadzone=21,11 / fast_pskip=0 / chroma_qp_offset=-3 / threads=6 / sliced_threads=0 / nr=0 / decimate=0 / interlaced=0 / bluray_compat=0 / constrained_intra=0 / bframes=6 / b_pyramid=2 / b_adapt=2 / b_bias=0 / direct=3 / weightb=1 / open_gop=0 / weightp=2 / keyint=250 / keyint_min=23 / scenecut=40 / intra_refresh=0 / rc_lookahead=50 / rc=2pass / mbtree=1 / bitrate=15500 / ratetol=1.0 / qcomp=0.65 / qpmin=0 / qpmax=69 / qpstep=4 / cplxblur=20.0 / qblur=0.5 / vbv_maxrate=38000 / vbv_bufsize=30000 / nal_hrd=none / ip_ratio=1.40 / aq=2:1.20</Encoding_settings>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio">
+<ID>2</ID>
+<Format>AC-3</Format>
+<Format_Info>Audio Coding 3</Format_Info>
+<Mode_extension>CM (complete main)</Mode_extension>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_AC3</Codec_ID>
+<Duration>1h 35mn</Duration>
+<Bit_rate_mode>Constant</Bit_rate_mode>
+<Bit_rate>640 Kbps</Bit_rate>
+<Channel_s_>6 channels</Channel_s_>
+<Channel_positions>Front: L C R, Side: L R, LFE</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>16 bits</Bit_depth>
+<Compression_mode>Lossy</Compression_mode>
+<Stream_size>437 MiB (4%)</Stream_size>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text">
+<ID>3</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Menu">
+<_00_00_00000>en:Credits</_00_00_00000>
+<_00_01_31039>en:A Time of Chaos</_00_01_31039>
+<_00_04_17292>en:Double Trouble</_00_04_17292>
+<_00_05_46721>en:Loud Scream, Soft Music</_00_05_46721>
+<_00_09_08789>en:The Gyro Captain</_00_09_08789>
+<_00_13_34008>en:The Refinery From Above</_00_13_34008>
+<_00_16_10376>en:Dinner for Two</_00_16_10376>
+<_00_19_07262>en:Wez&apos;s Arrows of Death</_00_19_07262>
+<_00_23_37948>en:A Rescue - in Vain</_00_23_37948>
+<_00_28_14818>en:Greetings From the Humungus</_00_28_14818>
+<_00_35_27708>en:Weighing Options; Happy Camper</_00_35_27708>
+<_00_37_48800>en:Max Makes a Deal</_00_37_48800>
+<_00_39_43408>en:Under Cover of Darkness</_00_39_43408>
+<_00_43_13814>en:Recovering the Big Rig</_00_43_13814>
+<_00_47_47126>en:Hot Pursuit</_00_47_47126>
+<_00_51_04882>en:Defending the Compound</_00_51_04882>
+<_00_53_23783>en:Planning Departures</_00_53_23783>
+<_00_56_25009>en:&quot;Nobody Gets Out of Here Alive.&quot;</_00_56_25009>
+<_00_59_43067>en:&quot;You&apos;re a Scavenger, Max.&quot;</_00_59_43067>
+<_01_03_25049>en:Max Makes His Run</_01_03_25049>
+<_01_06_20339>en:The Booby Trap</_01_06_20339>
+<_01_08_02823>en:Retrieved</_01_08_02823>
+<_01_11_41059>en:&quot;I&apos;m the Best Chance You&apos;ve Got.&quot;</_01_11_41059>
+<_01_13_35920>en:The Exodus Begins</_01_13_35920>
+<_01_16_04935>en:Boom!</_01_16_04935>
+<_01_17_28334>en:Attacked All Around</_01_17_28334>
+<_01_20_11598>en:Casualties of Battle</_01_20_11598>
+<_01_23_04396>en:Chaos Around the Driver&apos;s Seat</_01_23_04396>
+<_01_27_14062>en:Unloading an Unwanted Passenger</_01_27_14062>
+<_01_29_41667>en:The Cargo Revealed</_01_29_41667>
+<_01_31_28971>en:The Last of the Road Warrior</_01_31_28971>
+<_01_32_30199>en:End Credits</_01_32_30199>
+</track>
+
+</File>
+</Mediainfo>
+

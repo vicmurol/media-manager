@@ -6,13 +6,13 @@ package lan.vandiemens.media.info.track;
  */
 public enum SubtitleTrackType {
 
-    COMPLETE, FOR_HEARING_IMPAIRED, FORCED, COMMENTARY;
+    NORMAL, FOR_HEARING_IMPAIRED, FORCED, COMMENTARY;
 
     public static SubtitleTrackType parse(String type) {
         switch (type.toLowerCase()) {
             case "normal":
             case "complete":
-                return COMPLETE;
+                return NORMAL;
             case "fhi":
             case "hi":
                 return FOR_HEARING_IMPAIRED;
@@ -21,14 +21,14 @@ public enum SubtitleTrackType {
             case "comment":
                 return COMMENTARY;
             default:
-                return COMPLETE;
+                return NORMAL;
         }
     }
 
     @Override
     public String toString() {
         switch (this) {
-            case COMPLETE:
+            case NORMAL:
                 return "Complete";
             case FORCED:
                 return "Forced";

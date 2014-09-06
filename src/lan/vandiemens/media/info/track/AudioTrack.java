@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 public class AudioTrack extends MediaTrack {
 
     public static final Pattern channelsPattern = Pattern.compile("(?<channels>\\d+) channels?");
-    private String modeExtension = null;
-    private String duration = null;
     private int channelCount = 0;
     private int bitrate = 0;
     private AudioTrackType audioType = AudioTrackType.NORMAL;

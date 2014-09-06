@@ -1,5 +1,17 @@
+Media Manager v1.0 RC17
+-----------------------
+
+- add: media subfolders cataloging for original language parsing purposes
+- fix: several fixes and clean code improvements
+
+Media Manager v1.0 RC16
+-----------------------
+
+- add: subtitle extraction using mkvextract
+- fix: several fixes and clean code improvements
+
 Media Cataloguer RC15
---------------------
+---------------------
 
 - add: UTF-8 SubRip subtitle files without BOM are fixed to include it so
        mkvmerge does not double encode them assuming incorrectly they are
@@ -8,23 +20,23 @@ Media Cataloguer RC15
        by the Cataloguer application
 
 Media Cataloguer RC14
---------------------
+---------------------
 
 - fix: now the application works under JRE 1.7 Update 21 after changes done to
        Runtime.exec
 
 Media Cataloguer RC13
---------------------
+---------------------
 
 - add: mkvpropedit capabilities to improve edition performance when possible
 
 Media Cataloguer RC12
---------------------
+---------------------
 
 - add: multiple directories cataloging
 
 Media Cataloguer RC11
---------------------
+---------------------
 
 - add: extra 8 blank spaces before info fields colon to follow MediaInfo
        template changes
@@ -32,7 +44,7 @@ Media Cataloguer RC11
        semicolon character instead of assuming a fixed number of blank spaces
 
 Media Cataloguer RC10
---------------------
+---------------------
 
 - add: reverse mode added
 

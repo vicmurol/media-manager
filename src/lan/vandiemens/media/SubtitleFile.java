@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
+import lan.vandiemens.media.info.release.ReleaseInfoParser;
 import lan.vandiemens.media.info.release.ReleaseInfo;
 import lan.vandiemens.media.info.track.SubtitleTrack;
 import lan.vandiemens.media.info.track.SubtitleTrackType;
+import lan.vandiemens.media.subtitle.Addic7edReleaseParser;
 import lan.vandiemens.util.file.FileUtils;
 import lan.vandiemens.util.lang.Language;
 
@@ -29,14 +30,12 @@ public class SubtitleFile extends SubtitleTrack {
 
     public SubtitleFile(File file) throws IOException {
         checkIfSupportedSubtitle(file);
-        parseName(file);
+        parse(file);
         this.file = file;
+        isExternal = true;
     }
 
     private void checkIfSupportedSubtitle(File file) throws IOException {
-        if (file == null) {
-            throw new NullPointerException();
-        }
         if (!file.exists()) {
             throw new IllegalArgumentException(file + " doesn't exist!");
         }
@@ -55,13 +54,36 @@ public class SubtitleFile extends SubtitleTrack {
         return result;
     }
 
-    private void parseName(File file) {
+    private void parse(File file) {
         System.out.println("Parsing \"" + file.getName() + "\" as subtitle...");
-        String filename = FileUtils.getNameWithoutExtension(file);
+        parseFilename(file);
         parseExtension(file);
+    }
+
+    private void parseFilename(File file) {
+        String filename = FileUtils.getNameWithoutExtension(file);
+        if (followsAddic7edPattern(filename)) {
+            parseAsAddic7edSubtitle(filename);
+        } else {
+            parseAsSceneSubtitle(filename);
+        }
+    }
+
+    private boolean followsAddic7edPattern(String filename) {
+        return Addic7edReleaseParser.canParse(filename);
+    }
+
+    private void parseAsAddic7edSubtitle(String filename) {
+        System.out.println("Subtitle file follows Addic7ed naming pattern");
+        releaseInfo = Addic7edReleaseParser.parse(filename);
+//        language = ((TvEpisodeSubtitleReleaseInfo) releaseInfo).getLanguage();
+//        subtitleType = ((TvEpisodeSubtitleReleaseInfo) releaseInfo).getSubtitleType();
+    }
+
+    private void parseAsSceneSubtitle(String filename) {
         Matcher matcher = subtitlePattern.matcher(filename);
         if (matcher.matches()) {
-            System.out.println("Subtitle info found in the filename");
+            System.out.println("Subtitle file follows scene naming pattern");
             language = Language.parseLanguage(matcher.group("lang"));
             if (matcher.group("subtype") != null) {
                 subtitleType = SubtitleTrackType.parse(matcher.group("subtype"));
@@ -71,6 +93,19 @@ public class SubtitleFile extends SubtitleTrack {
             language = DEFAULT_LANGUAGE;
         }
         releaseInfo = ReleaseInfoParser.parse(filename);
+    }
+
+    private void parseExtension(File file) {
+        String extension = FileUtils.getExtension(file).toLowerCase();
+        switch (extension) {
+            case SUBRIP_EXTENSION:
+            case SUBSTATION_ALPHA_EXTENSION:
+            case ADVANCED_SUBSTATION_ALPHA_EXTENSION:
+                codecId = "S_TEXT/UTF8";
+                break;
+            default:
+                // TODO Add support for other text-based subtitle formats
+        }
     }
 
     public File getFile() {
@@ -98,19 +133,6 @@ public class SubtitleFile extends SubtitleTrack {
      */
     public boolean isTextBased() {
         return true; // TODO: Currently only UTF-8 encoded SubRip text subtitles supported, but check in the future
-    }
-
-    private void parseExtension(File file) {
-        String extension = FileUtils.getExtension(file).toLowerCase();
-        switch (extension) {
-            case SUBRIP_EXTENSION:
-            case SUBSTATION_ALPHA_EXTENSION:
-            case ADVANCED_SUBSTATION_ALPHA_EXTENSION:
-                codecId = "S_TEXT/UTF8";
-                break;
-            default:
-                // TODO Add support for other text-based subtitle formats
-        }
     }
 
     /**

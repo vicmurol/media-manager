@@ -4,7 +4,7 @@ package lan.vandiemens.media.info.release;
  *
  * @author vmurcia
  */
-public enum ReleaseGenre {
+public enum MotionPictureGenre {
     MOVIE,
     TV_SERIES,
     TV_PROGRAM,

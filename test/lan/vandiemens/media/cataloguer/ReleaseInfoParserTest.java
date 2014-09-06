@@ -4,6 +4,7 @@
  */
 package lan.vandiemens.media.cataloguer;
 
+import lan.vandiemens.media.info.release.ReleaseInfoParser;
 import lan.vandiemens.media.info.release.MovieReleaseInfo;
 import lan.vandiemens.media.info.release.ReleaseInfo;
 import lan.vandiemens.media.info.release.TvEpisodeReleaseInfo;
@@ -69,7 +70,7 @@ public class ReleaseInfoParserTest {
         assertEquals("Judge Jury Executioner", episodeInfo.getEpisodeTitle());
         assertEquals("720p", episodeInfo.getVideoQuality());
         assertEquals("HDiTunes", episodeInfo.getVideoSource());
-        assertEquals("CtrlHD", episodeInfo.getSceneGroup());
+        assertEquals("CtrlHD", episodeInfo.getReleaseGroup());
         assertEquals(-1,episodeInfo.getYear());
         assertNull(episodeInfo.getRipper());
         assertNull(episodeInfo.getUploader());
@@ -88,7 +89,7 @@ public class ReleaseInfoParserTest {
         assertEquals("The Hitchhiker's Guide to the Galaxy", movieInfo.getTitle());
         assertEquals("720p", movieInfo.getVideoQuality());
         assertEquals("BluRay", movieInfo.getVideoSource());
-        assertEquals("REVEiLLE", movieInfo.getSceneGroup());
+        assertEquals("REVEiLLE", movieInfo.getReleaseGroup());
         assertEquals(2005,movieInfo.getYear());
         assertNull(movieInfo.getRipper());
         assertNull(movieInfo.getUploader());

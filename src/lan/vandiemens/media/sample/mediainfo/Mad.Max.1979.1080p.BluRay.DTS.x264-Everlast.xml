@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediainfo version="0.7.67">
+<File>
+<track type="General">
+<Unique_ID>244335162334397981926722204801787181613 (0xB7D13D95620AC72EBB84F6124D733A2D)</Unique_ID>
+<Complete_name>Mad.Max.1979.1080p.BluRay.DTS.x264-Everlast.mkv</Complete_name>
+<Format>Matroska</Format>
+<Format_version>Version 2</Format_version>
+<File_size>14.5 GiB</File_size>
+<Duration>1h 33mn</Duration>
+<Overall_bit_rate>22.3 Mbps</Overall_bit_rate>
+<Encoded_date>UTC 2012-01-09 17:57:56</Encoded_date>
+<Writing_application>mkvmerge v5.2.0 (&apos;I can&apos;t explain&apos;) built on Dec 18 2011 18:12:03</Writing_application>
+<Writing_library>libebml v1.2.3 + libmatroska v1.3.0</Writing_library>
+</track>
+
+<track type="Video">
+<ID>1</ID>
+<Format>AVC</Format>
+<Format_Info>Advanced Video Codec</Format_Info>
+<Format_profile>High@L4.1</Format_profile>
+<Format_settings__CABAC>Yes</Format_settings__CABAC>
+<Format_settings__ReFrames>4 frames</Format_settings__ReFrames>
+<Codec_ID>V_MPEG4/ISO/AVC</Codec_ID>
+<Duration>1h 33mn</Duration>
+<Bit_rate>20.3 Mbps</Bit_rate>
+<Width>1 920 pixels</Width>
+<Height>820 pixels</Height>
+<Display_aspect_ratio>2.35:1</Display_aspect_ratio>
+<Frame_rate_mode>Constant</Frame_rate_mode>
+<Frame_rate>23.976 fps</Frame_rate>
+<Original_frame_rate>24.000 fps</Original_frame_rate>
+<Color_space>YUV</Color_space>
+<Chroma_subsampling>4:2:0</Chroma_subsampling>
+<Bit_depth>8 bits</Bit_depth>
+<Scan_type>Progressive</Scan_type>
+<Bits__Pixel_Frame_>0.538</Bits__Pixel_Frame_>
+<Stream_size>13.2 GiB (91%)</Stream_size>
+<Writing_library>x264 core 120 r2120 0c7dab9</Writing_library>
+<Encoding_settings>cabac=1 / ref=4 / deblock=1:-3:-3 / analyse=0x3:0x113 / me=esa / subme=10 / psy=1 / psy_rd=1.20:0.10 / mixed_ref=1 / me_range=32 / chroma_me=1 / trellis=2 / 8x8dct=1 / cqm=0 / deadzone=21,11 / fast_pskip=0 / chroma_qp_offset=-3 / threads=6 / sliced_threads=0 / nr=0 / decimate=0 / interlaced=0 / bluray_compat=0 / constrained_intra=0 / bframes=10 / b_pyramid=2 / b_adapt=2 / b_bias=0 / direct=3 / weightb=1 / open_gop=0 / weightp=2 / keyint=250 / keyint_min=24 / scenecut=40 / intra_refresh=0 / rc_lookahead=50 / rc=crf / mbtree=1 / crf=19.0 / qcomp=0.70 / qpmin=10 / qpmax=51 / qpstep=4 / vbv_maxrate=38000 / vbv_bufsize=30000 / crf_max=0.0 / nal_hrd=none / ip_ratio=1.40 / aq=2:0.85</Encoding_settings>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio">
+<ID>2</ID>
+<Format>DTS</Format>
+<Format_Info>Digital Theater Systems</Format_Info>
+<Mode>16</Mode>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_DTS</Codec_ID>
+<Duration>1h 33mn</Duration>
+<Bit_rate_mode>Constant</Bit_rate_mode>
+<Bit_rate>1 509 Kbps</Bit_rate>
+<Channel_s_>6 channels</Channel_s_>
+<Channel_positions>Front: L C R, Side: L R, LFE</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>24 bits</Bit_depth>
+<Compression_mode>Lossy</Compression_mode>
+<Stream_size>1 006 MiB (7%)</Stream_size>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text">
+<ID>3</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Menu">
+<_00_00_00000>en:Main Title</_00_00_00000>
+<_00_01_00518>en:The Night Rider</_00_01_00518>
+<_00_05_35251>en:Goose</_00_05_35251>
+<_00_09_16514>en:Max</_00_09_16514>
+<_00_12_21449>en:Crazy &apos;Bout You</_00_12_21449>
+<_00_15_34808>en:Heroes</_00_15_34808>
+<_00_19_19157>en:New Enemies</_00_19_19157>
+<_00_21_46805>en:Old Friend</_00_21_46805>
+<_00_24_42439>en:Terrorized</_00_24_42439>
+<_00_26_59743>en:Link</_00_26_59743>
+<_00_30_33665>en:No Contest</_00_30_33665>
+<_00_36_29437>en:Big Mouth</_00_36_29437>
+<_00_38_53581>en:Goose&apos;s Gander</_00_38_53581>
+<_00_40_15871>en:Accident</_00_40_15871>
+<_00_43_02538>en:Ambush</_00_43_02538>
+<_00_46_52809>en:Not Goose</_00_46_52809>
+<_00_48_25819>en:No Sense</_00_48_25819>
+<_00_50_20225>en:Through</_00_50_20225>
+<_00_53_02971>en:Holiday</_00_53_02971>
+<_00_55_39002>en:Getting an Ice Cream</_00_55_39002>
+<_00_59_29607>en:Purshit</_00_59_29607>
+<_01_02_05012>en:The Beach</_01_02_05012>
+<_01_05_49695>en:Unquiet Woods</_01_05_49695>
+<_01_08_25810>en:Sprog!</_01_08_25810>
+<_01_12_27051>en:Severed Family</_01_12_27051>
+<_01_14_43145>en:Revenge</_01_14_43145>
+<_01_17_49539>en:One by One</_01_17_49539>
+<_01_20_32369>en:Man Down</_01_20_32369>
+<_01_24_55632>en:Head-On</_01_24_55632>
+<_01_26_27557>en:Go!</_01_26_27557>
+<_01_29_59060>en:Justice</_01_29_59060>
+<_01_30_43688>en:End Credits</_01_30_43688>
+</track>
+
+</File>
+</Mediainfo>
+

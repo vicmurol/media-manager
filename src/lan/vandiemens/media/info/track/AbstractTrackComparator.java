@@ -2,7 +2,7 @@ package lan.vandiemens.media.info.track;
 
 import java.util.Comparator;
 import static lan.vandiemens.media.info.track.SubtitleTrackType.COMMENTARY;
-import static lan.vandiemens.media.info.track.SubtitleTrackType.COMPLETE;
+import static lan.vandiemens.media.info.track.SubtitleTrackType.NORMAL;
 import static lan.vandiemens.media.info.track.SubtitleTrackType.FORCED;
 import static lan.vandiemens.media.info.track.SubtitleTrackType.FOR_HEARING_IMPAIRED;
 import static lan.vandiemens.media.info.track.TrackType.AUDIO;
@@ -167,11 +167,11 @@ public abstract class AbstractTrackComparator implements Comparator<Track> {
                     default:
                         return -1;
                 }
-            case COMPLETE:
+            case NORMAL:
                 switch (track2.getSubType()) {
                     case FORCED:
                         return 1;
-                    case COMPLETE:
+                    case NORMAL:
                         return 0;
                     default:
                         return -1;
@@ -179,7 +179,7 @@ public abstract class AbstractTrackComparator implements Comparator<Track> {
             case FOR_HEARING_IMPAIRED:
                 switch (track2.getSubType()) {
                     case FORCED:
-                    case COMPLETE:
+                    case NORMAL:
                         return 1;
                     case FOR_HEARING_IMPAIRED:
                         return 0;
@@ -189,7 +189,7 @@ public abstract class AbstractTrackComparator implements Comparator<Track> {
             case COMMENTARY:
                 switch (track2.getSubType()) {
                     case FORCED:
-                    case COMPLETE:
+                    case NORMAL:
                     case FOR_HEARING_IMPAIRED:
                         return 1;
                     default:

@@ -1,7 +1,7 @@
 package lan.vandiemens.test;
 
 import java.util.regex.Matcher;
-import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
+import lan.vandiemens.media.info.release.ReleaseInfoParser;
 
 /**
  *

@@ -32,6 +32,8 @@ public enum VideoSource {
             case "bluray":
             case "blu-ray":
                 return BD_RIP;
+            case "blu-ray.remux":
+            case "bluray.remux":
             case "bdremux":
                 return BD_REMUX;
             case "hdtv":

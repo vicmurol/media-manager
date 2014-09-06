@@ -5,14 +5,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
 import lan.vandiemens.media.analysis.Codec;
 import lan.vandiemens.media.analysis.VideoMode;
 import lan.vandiemens.media.analysis.VideoSource;
 import lan.vandiemens.util.lang.Language;
 import org.apache.commons.validator.routines.DomainValidator;
-
-
 
 
 /**
@@ -526,7 +523,7 @@ public class ReleaseTokenizer {
     }
 
     private static boolean isReleaseType(String value) {
-        return ReleaseType.parse(value) != ReleaseType.UNDEFINED;
+        return ReleaseType.parse(value) != ReleaseType.COMMON;
     }
 
     private static boolean isPartialCodecName(String value) {
@@ -599,7 +596,7 @@ public class ReleaseTokenizer {
             }
         }
 
-        return delimiter == null ? false : true;
+        return delimiter != null;
     }
 
     /**
@@ -616,10 +613,7 @@ public class ReleaseTokenizer {
             }
         }
         // No safe zone
-        if (safeZoneStartIndex >= releaseTokens.size()) {
-            return false;
-        }
-        return true;
+        return safeZoneStartIndex < releaseTokens.size();
     }
 }
 

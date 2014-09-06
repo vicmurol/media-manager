@@ -17,6 +17,7 @@ public class MkvToolNixHelper {
     public static final String MKVTOOLNIX_OSX_INSTALL_FOLDER = "/usr/local/bin/";
     public static final String MKVTOOLNIX_LINUX_INSTALL_FOLDER = "./"; // TODO: Find out MkvToolNix install folder on Linux systems
 
+
     private MkvToolNixHelper() {
         // Do not instantiate
     }
@@ -28,7 +29,10 @@ public class MkvToolNixHelper {
         File mkvPropEditExe = getMkvPropEditExecutable();
         System.out.print("Looking for " + mkvPropEditExe.getAbsolutePath() + "... ");
         System.out.println(mkvPropEditExe.exists() ? "Found" : "Not found");
-        return mkvMergeExe.exists() && mkvPropEditExe.exists();
+        File mkvExtractExe = getMkvExtractExecutable();
+        System.out.print("Looking for " + mkvExtractExe.getAbsolutePath() + "... ");
+        System.out.println(mkvExtractExe.exists() ? "Found" : "Not found");
+        return mkvMergeExe.exists() && mkvPropEditExe.exists() && mkvExtractExe.exists();
     }
 
     public static String getMkvToolNixInstallFolder() {
@@ -43,10 +47,11 @@ public class MkvToolNixHelper {
         } else if (SystemUtils.isMacOs()) {
             installPath = MKVTOOLNIX_OSX_INSTALL_FOLDER;
         } else {
-            installPath = MKVTOOLNIX_LINUX_INSTALL_FOLDER; // TODO Add Linux support
+            installPath = MKVTOOLNIX_LINUX_INSTALL_FOLDER; // TODO: Add Linux support
         }
 
-        return installPath;
+        File folder = new File(installPath);
+        return folder.getAbsolutePath() + File.separator;
     }
 
     public static File getMkvMergeExecutable() {
@@ -61,10 +66,14 @@ public class MkvToolNixHelper {
         } else if (SystemUtils.isMacOs()) {
             mkvMergeExeFile = new File(MKVTOOLNIX_OSX_INSTALL_FOLDER, "mkvmerge");
         } else {
-            mkvMergeExeFile = new File(MKVTOOLNIX_LINUX_INSTALL_FOLDER, "mkvmerge"); // TODO Add Linux support
+            mkvMergeExeFile = new File(MKVTOOLNIX_LINUX_INSTALL_FOLDER, "mkvmerge"); // TODO: Add Linux support
         }
 
         return mkvMergeExeFile;
+    }
+
+    public static String getMkvMergeExePath() {
+        return getMkvMergeExecutable().getAbsolutePath();
     }
 
     public static File getMkvPropEditExecutable() {
@@ -79,10 +88,36 @@ public class MkvToolNixHelper {
         } else if (SystemUtils.isMacOs()) {
             mkvPropEditExeFile = new File(MKVTOOLNIX_OSX_INSTALL_FOLDER, "mkvpropedit");
         } else {
-            mkvPropEditExeFile = new File(MKVTOOLNIX_LINUX_INSTALL_FOLDER, "mkvpropedit");; // TODO Add Linux support
+            mkvPropEditExeFile = new File(MKVTOOLNIX_LINUX_INSTALL_FOLDER, "mkvpropedit"); // TODO: Add Linux support
         }
 
         return mkvPropEditExeFile;
+    }
+
+    public static String getMkvPropEditExePath() {
+        return getMkvPropEditExecutable().getAbsolutePath();
+    }
+
+    public static File getMkvExtractExecutable() {
+        File mkvExtractExeFile;
+
+        if (SystemUtils.isWindows()) {
+            if (SystemUtils.isWindows64bits()) {
+                mkvExtractExeFile = new File(MKVTOOLNIX_WINDOWS_X64_INSTALL_FOLDER, "mkvextract.exe");
+            } else {
+                mkvExtractExeFile = new File(MKVTOOLNIX_WINDOWS_X86_INSTALL_FOLDER, "mkvextract.exe");
+            }
+        } else if (SystemUtils.isMacOs()) {
+            mkvExtractExeFile = new File(MKVTOOLNIX_OSX_INSTALL_FOLDER, "mkvextract");
+        } else {
+            mkvExtractExeFile = new File(MKVTOOLNIX_LINUX_INSTALL_FOLDER, "mkvextract"); // TODO: Add Linux support
+        }
+
+        return mkvExtractExeFile;
+    }
+
+    public static String getMkvExtractExePath() {
+        return getMkvExtractExecutable().getAbsolutePath();
     }
 
     /**
@@ -91,6 +126,7 @@ public class MkvToolNixHelper {
      * @param command the command to be executed
      * @return <code>true</code> if the command was successfully executed,
      *         <code>false</code> otherwise
+     * @throws java.io.IOException
      */
     public static boolean execute(Command command) throws IOException {
         System.out.println("Processing...");

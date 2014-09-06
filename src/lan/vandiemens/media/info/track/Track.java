@@ -12,6 +12,8 @@ public interface Track {
 
     public boolean isEnabled();
 
+    public boolean isExternal();
+
     public void disable();
 
     public int getTrackId();
@@ -55,4 +57,6 @@ public interface Track {
     public String toXml();
 
     public String getMkvPropEditDescription();
+
+    public String getAssociatedFileExtension();
 }

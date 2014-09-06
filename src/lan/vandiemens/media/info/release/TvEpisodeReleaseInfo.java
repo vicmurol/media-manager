@@ -1,6 +1,6 @@
 package lan.vandiemens.media.info.release;
 
-import org.apache.commons.lang3.text.WordUtils;
+import lan.vandiemens.util.lang.EnhancedWordUtils;
 
 /**
  *
@@ -17,7 +17,7 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         super(showTitle);
         this.season = season;
         episodeNumber = episode;
-        genre = ReleaseGenre.TV_SERIES;
+        genre = MotionPictureGenre.TV_SERIES;
     }
 
     public String getEpisodeTitle() {
@@ -36,22 +36,14 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         return season;
     }
 
-    public void setSeason(int season) {
-        this.season = season;
-    }
-
     public int getEpisodeNumber() {
         return episodeNumber;
-    }
-
-    public void setEpisodeNumber(int episode) {
-        this.episodeNumber = episode;
     }
 
     @Override
     public String getFormattedTitle() {
         StringBuilder titleBuilder = new StringBuilder();
-        titleBuilder.append(isTitleCapitalized() ? title : WordUtils.capitalize(title));
+        titleBuilder.append(isTitleCapitalized() ? title : EnhancedWordUtils.capitalizeAsHeadline(title));
         titleBuilder.append(" - [");
         titleBuilder.append(season);
         int episode = episodeNumber;
@@ -59,7 +51,8 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
         titleBuilder.append(episode);
         titleBuilder.append("]");
         if (hasEpisodeTitle()) {
-            titleBuilder.append(" ").append(isTitleCapitalized() ? episodeTitle : WordUtils.capitalize(episodeTitle));
+            titleBuilder.append(" ").append(isTitleCapitalized() ?
+                    episodeTitle : EnhancedWordUtils.capitalizeAsHeadline(episodeTitle));
         }
 
         return titleBuilder.toString();
@@ -68,7 +61,7 @@ public class TvEpisodeReleaseInfo extends ReleaseInfo {
     @Override
     public boolean equalsBasicInfo(ReleaseInfo info2) {
         return (equalsBasicInfoIgnoreSceneGroup(info2)
-                && info2.getSceneGroup().equalsIgnoreCase(sceneGroup));
+                && info2.getReleaseGroup().equalsIgnoreCase(sceneGroup));
     }
 
     @Override

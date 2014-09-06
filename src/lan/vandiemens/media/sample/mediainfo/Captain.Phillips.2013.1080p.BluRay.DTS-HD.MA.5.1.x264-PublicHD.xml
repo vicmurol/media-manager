@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediainfo version="0.7.65">
+<File>
+<track type="General">
+<Unique_ID>248601865564414463465548769909940129586 (0xBB06FA4B5725CB01949D6979C76B8F32)</Unique_ID>
+<Complete_name>Captain.Phillips.2013.1080p.BluRay.DTS-HD.MA.5.1.x264-PublicHD.mkv</Complete_name>
+<Format>Matroska</Format>
+<Format_version>Version 2</Format_version>
+<File_size>13.0 GiB</File_size>
+<Duration>2h 14mn</Duration>
+<Overall_bit_rate_mode>Variable</Overall_bit_rate_mode>
+<Overall_bit_rate>13.9 Mbps</Overall_bit_rate>
+<Encoded_date>UTC 2014-01-09 05:00:32</Encoded_date>
+<Writing_application>mkvmerge v5.8.0 (&apos;No Sleep / Pillow&apos;) built on Sep  2 2012 15:37:04</Writing_application>
+<Writing_library>libebml v1.2.3 + libmatroska v1.3.0</Writing_library>
+</track>
+
+<track type="Video">
+<ID>1</ID>
+<Format>AVC</Format>
+<Format_Info>Advanced Video Codec</Format_Info>
+<Format_profile>High@L4.1</Format_profile>
+<Format_settings__CABAC>Yes</Format_settings__CABAC>
+<Format_settings__ReFrames>5 frames</Format_settings__ReFrames>
+<Codec_ID>V_MPEG4/ISO/AVC</Codec_ID>
+<Duration>2h 14mn</Duration>
+<Width>1 920 pixels</Width>
+<Height>800 pixels</Height>
+<Display_aspect_ratio>2.40:1</Display_aspect_ratio>
+<Frame_rate_mode>Constant</Frame_rate_mode>
+<Frame_rate>23.976 fps</Frame_rate>
+<Color_space>YUV</Color_space>
+<Chroma_subsampling>4:2:0</Chroma_subsampling>
+<Bit_depth>8 bits</Bit_depth>
+<Scan_type>Progressive</Scan_type>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio" streamid="1">
+<ID>2</ID>
+<Format>DTS</Format>
+<Format_Info>Digital Theater Systems</Format_Info>
+<Format_profile>MA / Core</Format_profile>
+<Mode>16</Mode>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_DTS</Codec_ID>
+<Duration>2h 14mn</Duration>
+<Bit_rate_mode>Variable</Bit_rate_mode>
+<Bit_rate>Unknown / 1 509 Kbps</Bit_rate>
+<Channel_count>6 channels</Channel_count>
+<Channel_positions>Front: L C R, Side: L R, LFE</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>24 bits</Bit_depth>
+<Compression_mode>Lossless / Lossy</Compression_mode>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio" streamid="2">
+<ID>3</ID>
+<Format>AC-3</Format>
+<Format_Info>Audio Coding 3</Format_Info>
+<Format_profile>Dolby Digital</Format_profile>
+<Mode_extension>CM (complete main)</Mode_extension>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_AC3</Codec_ID>
+<Duration>2h 14mn</Duration>
+<Bit_rate_mode>Constant</Bit_rate_mode>
+<Bit_rate>192 Kbps</Bit_rate>
+<Channel_count>2 channels</Channel_count>
+<Channel_positions>Front: L R</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>16 bits</Bit_depth>
+<Compression_mode>Lossy</Compression_mode>
+<Stream_size>184 MiB (1%)</Stream_size>
+<Title>Director&apos;s Commentary Track</Title>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="1">
+<ID>4</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="2">
+<ID>5</ID>
+<Format>UTF-8</Format>
+<Codec_ID>S_TEXT/UTF8</Codec_ID>
+<Codec_ID_Info>UTF-8 Plain Text</Codec_ID_Info>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="3">
+<ID>6</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Title>Forced</Title>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="4">
+<ID>7</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>French</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="5">
+<ID>8</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>French</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="6">
+<ID>9</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Title>Forced</Title>
+<Language>French</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="7">
+<ID>10</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Spanish</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="8">
+<ID>11</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Title>Forced</Title>
+<Language>Spanish</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="9">
+<ID>12</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Menu">
+<_00_00_00000>en:00:00:00.000</_00_00_00000>
+<_00_09_12927>en:00:09:12.927</_00_09_12927>
+<_00_15_30138>en:00:15:30.138</_00_15_30138>
+<_00_22_48742>en:00:22:48.742</_00_22_48742>
+<_00_30_11435>en:00:30:11.435</_00_30_11435>
+<_00_39_38876>en:00:39:38.876</_00_39_38876>
+<_00_48_01003>en:00:48:01.003</_00_48_01003>
+<_00_58_24751>en:00:58:24.751</_00_58_24751>
+<_01_04_36539>en:01:04:36.539</_01_04_36539>
+<_01_13_02837>en:01:13:02.837</_01_13_02837>
+<_01_19_14249>en:01:19:14.249</_01_19_14249>
+<_01_25_41261>en:01:25:41.261</_01_25_41261>
+<_01_34_14023>en:01:34:14.023</_01_34_14023>
+<_01_41_44598>en:01:41:44.598</_01_41_44598>
+<_01_51_32102>en:01:51:32.102</_01_51_32102>
+<_02_02_38851>en:02:02:38.851</_02_02_38851>
+</track>
+
+</File>
+</Mediainfo>
+

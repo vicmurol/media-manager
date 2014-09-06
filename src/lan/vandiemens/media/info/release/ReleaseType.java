@@ -13,7 +13,7 @@ public enum ReleaseType {
     DIRECTORS_CUT,
     UNRATED,
     EXTENDED_EDITION,
-    UNDEFINED;
+    COMMON;
 
 
     public static ReleaseType parse(String type) {
@@ -35,7 +35,34 @@ public enum ReleaseType {
             case "limited":
                 return LIMITED;
             default:
-                return UNDEFINED;
+                return COMMON;
+        }
+    }
+
+    public boolean isSpecialVersion() {
+        return this == EXTENDED_EDITION || this == DIRECTORS_CUT || this == REMASTERED;
+    }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case PROPER:
+            case FIXED:
+                return "Proper";
+            case REMASTERED:
+                return "Remastered";
+            case REMAKE:
+                return "Remake";
+            case UNRATED:
+                return "Unrated";
+            case EXTENDED_EDITION:
+                return "Extended Edition";
+            case DIRECTORS_CUT:
+                return "Director's Cut";
+            case LIMITED:
+                return "Limited";
+            default:
+                return "Common";
         }
     }
 }

@@ -10,6 +10,7 @@ import lan.vandiemens.util.lang.Language;
  */
 public abstract class MediaTrack implements Track {
 
+    protected final String UNKNOWN_FILE_EXTENSION = "unknown";
     // mkvmerge and mkvextract use track IDs but mkvpropedit and MediaInfo use track numbers instead
     // Track numbers start at 1, but track IDs start at 0
     protected int trackId = 0;
@@ -22,6 +23,7 @@ public abstract class MediaTrack implements Track {
     protected boolean isDefault = false;
     protected boolean isForced = false;
     protected boolean isDisabled = false;
+    protected boolean isExternal = false;
 
     public String getFormat() {
         return format;
@@ -67,20 +69,29 @@ public abstract class MediaTrack implements Track {
         trackId = number - 1;
     }
 
+    @Override
     public boolean isDefault() {
         return isDefault;
     }
 
+    @Override
     public void setAsDefault(boolean isDefault) {
         this.isDefault = isDefault;
     }
 
+    @Override
     public boolean isForced() {
         return isForced;
     }
 
+    @Override
     public void setForced(boolean isForced) {
         this.isForced = isForced;
+    }
+
+    @Override
+    public boolean isExternal() {
+        return isExternal;
     }
 
     @Override
@@ -98,6 +109,7 @@ public abstract class MediaTrack implements Track {
         return language;
     }
 
+    @Override
     public String getLanguageCode() {
         return (language == null || language == Language.UNDEFINED) ? "und" : language.getThreeLettersIsoCode();
     }
@@ -112,18 +124,22 @@ public abstract class MediaTrack implements Track {
         this.language = language == null ? Language.UNDEFINED : Language.parseLanguage(language);
     }
 
+    @Override
     public boolean isLatinSpanish() {
         return (language == Language.SPANISH && title != null && (title.indexOf("Latin") != -1 || title.indexOf("LATIN") != -1 || title.indexOf("latin") != -1));
     }
 
+    @Override
     public boolean isSpanish() {
         return language == Language.SPANISH;
     }
 
+    @Override
     public boolean isEnglish() {
         return language == Language.ENGLISH;
     }
 
+    @Override
     public boolean hasLanguage(Language lang) {
         return language == lang;
     }
@@ -144,6 +160,17 @@ public abstract class MediaTrack implements Track {
     @Override
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * Returns the file extension used when extracting this track as a
+     * standalone file.
+     *
+     * @return the file extension for track extraction purposes
+     */
+    @Override
+    public String getAssociatedFileExtension() {
+        return UNKNOWN_FILE_EXTENSION;
     }
 
     @Override

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mediainfo version="0.7.64">
+<File>
+<track type="General">
+<Unique_ID>213760160308967590620409350194908309491 (0xA0D0B598FBFD34839EBFF6401E2F27F3)</Unique_ID>
+<Complete_name>Despicable.Me.2.2013.1080p.BluRay.DTS-HD.MA.5.1.x264-PublicHD.mkv</Complete_name>
+<Format>Matroska</Format>
+<Format_version>Version 2</Format_version>
+<File_size>10.8 GiB</File_size>
+<Duration>1h 37mn</Duration>
+<Overall_bit_rate_mode>Variable</Overall_bit_rate_mode>
+<Overall_bit_rate>15.8 Mbps</Overall_bit_rate>
+<Encoded_date>UTC 2013-10-20 04:21:59</Encoded_date>
+<Writing_application>mkvmerge v5.8.0 (&apos;No Sleep / Pillow&apos;) built on Sep  2 2012 15:37:04</Writing_application>
+<Writing_library>libebml v1.2.3 + libmatroska v1.3.0</Writing_library>
+</track>
+
+<track type="Video">
+<ID>1</ID>
+<Format>AVC</Format>
+<Format_Info>Advanced Video Codec</Format_Info>
+<Format_profile>High@L4.1</Format_profile>
+<Format_settings__CABAC>Yes</Format_settings__CABAC>
+<Format_settings__ReFrames>4 frames</Format_settings__ReFrames>
+<Codec_ID>V_MPEG4/ISO/AVC</Codec_ID>
+<Duration>1h 37mn</Duration>
+<Width>1 920 pixels</Width>
+<Height>1 036 pixels</Height>
+<Display_aspect_ratio>1.85:1</Display_aspect_ratio>
+<Frame_rate_mode>Constant</Frame_rate_mode>
+<Frame_rate>23.976 fps</Frame_rate>
+<Color_space>YUV</Color_space>
+<Chroma_subsampling>4:2:0</Chroma_subsampling>
+<Bit_depth>8 bits</Bit_depth>
+<Scan_type>Progressive</Scan_type>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio" streamid="1">
+<ID>2</ID>
+<Format>DTS</Format>
+<Format_Info>Digital Theater Systems</Format_Info>
+<Format_profile>MA / Core</Format_profile>
+<Mode>16</Mode>
+<Format_settings__Endianness>Big</Format_settings__Endianness>
+<Codec_ID>A_DTS</Codec_ID>
+<Duration>1h 37mn</Duration>
+<Bit_rate_mode>Variable</Bit_rate_mode>
+<Bit_rate>Unknown / 1 509 Kbps</Bit_rate>
+<Channel_count>6 channels</Channel_count>
+<Channel_positions>Front: L C R, Side: L R, LFE</Channel_positions>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Bit_depth>24 bits</Bit_depth>
+<Compression_mode>Lossless / Lossy</Compression_mode>
+<Language>English</Language>
+<Default>Yes</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Audio" streamid="2">
+<ID>3</ID>
+<Format>Vorbis</Format>
+<Format_settings__Floor>1</Format_settings__Floor>
+<Codec_ID>A_VORBIS</Codec_ID>
+<Duration>1h 37mn</Duration>
+<Bit_rate_mode>Variable</Bit_rate_mode>
+<Bit_rate>60.0 Kbps</Bit_rate>
+<Channel_count>2 channels</Channel_count>
+<Sampling_rate>48.0 KHz</Sampling_rate>
+<Compression_mode>Lossy</Compression_mode>
+<Stream_size>42.0 MiB (0%)</Stream_size>
+<Writing_library>aoTuV 20110424 (UTC 2011-04-24)</Writing_library>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="1">
+<ID>4</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>English</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="2">
+<ID>5</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Chinese</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="3">
+<ID>6</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Chinese</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="4">
+<ID>7</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Croatian</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="5">
+<ID>8</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Dutch</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="6">
+<ID>9</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Estonian</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="7">
+<ID>10</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>French</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="8">
+<ID>11</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>German</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="9">
+<ID>12</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Hebrew</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="10">
+<ID>13</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Icelandic</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="11">
+<ID>14</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Latvian</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="12">
+<ID>15</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Lithuanian</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="13">
+<ID>16</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Portuguese</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="14">
+<ID>17</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Russian</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="15">
+<ID>18</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Spanish</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="16">
+<ID>19</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Thai</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Text" streamid="17">
+<ID>20</ID>
+<Format>PGS</Format>
+<Muxing_mode>zlib</Muxing_mode>
+<Codec_ID>S_HDMV/PGS</Codec_ID>
+<Codec_ID_Info>The same subtitle format used on BDs/HD-DVDs</Codec_ID_Info>
+<Language>Turkish</Language>
+<Default>No</Default>
+<Forced>No</Forced>
+</track>
+
+<track type="Menu">
+<_00_00_00000>en:00:00:00.000</_00_00_00000>
+<_00_03_22994>en:00:03:22.994</_00_03_22994>
+<_00_08_04734>en:00:08:04.734</_00_08_04734>
+<_00_15_50867>en:00:15:50.867</_00_15_50867>
+<_00_18_28232>en:00:18:28.232</_00_18_28232>
+<_00_24_36892>en:00:24:36.892</_00_24_36892>
+<_00_30_50724>en:00:30:50.724</_00_30_50724>
+<_00_34_40704>en:00:34:40.704</_00_34_40704>
+<_00_40_48279>en:00:40:48.279</_00_40_48279>
+<_00_46_26200>en:00:46:26.200</_00_46_26200>
+<_00_51_23122>en:00:51:23.122</_00_51_23122>
+<_00_56_27426>en:00:56:27.426</_00_56_27426>
+<_01_00_00472>en:01:00:00.472</_01_00_00472>
+<_01_03_27053>en:01:03:27.053</_01_03_27053>
+<_01_08_44078>en:01:08:44.078</_01_08_44078>
+<_01_14_01979>en:01:14:01.979</_01_14_01979>
+<_01_18_08058>en:01:18:08.058</_01_18_08058>
+<_01_22_33907>en:01:22:33.907</_01_22_33907>
+<_01_27_09099>en:01:27:09.099</_01_27_09099>
+<_01_30_33720>en:01:30:33.720</_01_30_33720>
+</track>
+
+</File>
+</Mediainfo>
+

@@ -1,6 +1,6 @@
 package lan.vandiemens.test;
 
-import lan.vandiemens.media.cataloguer.ReleaseInfoParser;
+import lan.vandiemens.media.info.release.ReleaseInfoParser;
 
 /**
  *

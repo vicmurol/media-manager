@@ -39,7 +39,7 @@ public class TvRageClient {
     private URL getSearchUrl(String name) {
         URL url = null;
         try {
-            url = new URL(HTTP_PROTOCOL, TV_RAGE_HOST, FULL_SEARCH_QUERY + WebRequest.encodeUrl(name));
+            url = new URL(HTTP_PROTOCOL, TV_RAGE_HOST, FULL_SEARCH_QUERY + WebRequest.encodeForUrl(name));
         } catch (MalformedURLException ex) {
             Logger.getLogger(TvRageClient.class.getName()).log(Level.SEVERE, null, ex);
         }

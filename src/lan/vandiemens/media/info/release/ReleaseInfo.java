@@ -1,15 +1,17 @@
 package lan.vandiemens.media.info.release;
 
-import org.apache.commons.lang3.text.WordUtils;
+import lan.vandiemens.util.lang.EnhancedWordUtils;
 
 /**
- * The release information of a media container as parsed from a media filename.
+ * The release information of a media container.
  *
  * @author vmurcia
  */
 public class ReleaseInfo {
 
-    protected ReleaseGenre genre = ReleaseGenre.GENERIC_VIDEO;
+    private static final int YEAR_OF_EARLIEST_SURVIVING_MOTION_PICTURE = 1888;
+
+    protected MotionPictureGenre genre = MotionPictureGenre.GENERIC_VIDEO;
     protected String title = null;
     protected String originalTitle = null;
     protected String ripper = null;
@@ -22,11 +24,18 @@ public class ReleaseInfo {
     protected int year = -1;
 
     public ReleaseInfo(String title) {
+        if (title == null) {
+        throw new IllegalArgumentException("A valid title must be provided");
+        }
         this.title = title;
     }
 
-    public ReleaseGenre getGenre() {
+    public MotionPictureGenre getGenre() {
         return genre;
+    }
+
+    public boolean hasYearInfo() {
+        return year > 0;
     }
 
     public int getYear() {
@@ -34,7 +43,15 @@ public class ReleaseInfo {
     }
 
     public void setYear(int year) {
+        if (year < YEAR_OF_EARLIEST_SURVIVING_MOTION_PICTURE) {
+            throw new IllegalArgumentException("Invalid year, as earliest surviving motion picture dates from "
+                    + YEAR_OF_EARLIEST_SURVIVING_MOTION_PICTURE);
+        }
         this.year = year;
+    }
+
+    public boolean hasVideoSourceInfo() {
+        return videoSource != null;
     }
 
     public String getVideoSource() {
@@ -45,12 +62,20 @@ public class ReleaseInfo {
         videoSource = source;
     }
 
+    public boolean hasUploaderInfo() {
+        return uploader != null;
+    }
+
     public String getUploader() {
         return uploader;
     }
 
     public void setUploader(String uploader) {
         this.uploader = uploader;
+    }
+
+    public boolean hasWebSourceInfo() {
+        return webSource != null;
     }
 
     public String getWebSource() {
@@ -70,17 +95,15 @@ public class ReleaseInfo {
     }
 
     public String getFormattedTitle() {
-        StringBuilder titleBuilder = new StringBuilder();
-        titleBuilder.append(isTitleCapitalized() ? title : WordUtils.capitalize(title));
-        if (year > 0) {
-            titleBuilder.append(" (").append(year).append(")");
-        }
-
-        return titleBuilder.toString();
+        return isTitleCapitalized() ? title : EnhancedWordUtils.capitalizeAsHeadline(title);
     }
 
     public boolean isTitleCapitalized() {
         return Character.isUpperCase(title.toCharArray()[0]);
+    }
+
+    public boolean hasOriginalTitleInfo() {
+        return originalTitle != null;
     }
 
     public String getOriginalTitle() {
@@ -91,16 +114,20 @@ public class ReleaseInfo {
         originalTitle = name;
     }
 
+    public boolean hasVideoQualityInfo() {
+        return videoQuality != null;
+    }
+
     public String getVideoQuality() {
         return videoQuality;
     }
 
-    public boolean isVideoQualityKnown() {
-        return videoQuality != null;
-    }
-
     public void setVideoQuality(String quality) {
         videoQuality = quality;
+    }
+
+    public boolean hasRipperInfo() {
+        return ripper != null;
     }
 
     public String getRipper() {
@@ -111,6 +138,10 @@ public class ReleaseInfo {
         this.ripper = ripper;
     }
 
+    public boolean hasCodecDescription() {
+        return codecDescription != null;
+    }
+
     public String getCodecDescription() {
         return codecDescription;
     }
@@ -119,7 +150,7 @@ public class ReleaseInfo {
         codecDescription = desc;
     }
 
-    public String getSceneGroup() {
+    public String getReleaseGroup() {
         return sceneGroup;
     }
 
@@ -129,7 +160,7 @@ public class ReleaseInfo {
 
     public boolean equalsBasicInfo(ReleaseInfo info2) {
         return (equalsBasicInfoIgnoreSceneGroup(info2)
-                && info2.getSceneGroup().equalsIgnoreCase(sceneGroup));
+                && info2.getReleaseGroup().equalsIgnoreCase(sceneGroup));
     }
 
     public boolean equalsBasicInfoIgnoreSceneGroup(ReleaseInfo info2) {
@@ -140,6 +171,6 @@ public class ReleaseInfo {
     }
 
     public boolean hasCompleteBasicInfo() {
-        return true; // Title suffices
+        return true; // Title suffices for generic video
     }
 }
