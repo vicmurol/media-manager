@@ -309,9 +309,9 @@ public class MediaFile {
         boolean result = false;
         if (hasWdTvCompatibleSpanishAudioTrack()) {
             result = true;
-            System.out.println("Approved: Spanish media with WD TV Live compatible Spanish audio track");
+            printApprovedMessage("Spanish media with WD TV Live compatible Spanish audio track");
         } else {
-            System.out.println("Disapproved\nRequirement not met: Spanish media without compatible Spanish audio track!");
+            printDisapprovedMessage("Spanish media without compatible Spanish audio track!");
         }
         return result;
     }
@@ -320,13 +320,13 @@ public class MediaFile {
         boolean result = false;
         if (hasWdTvCompatibleEnglishAudioTrack()) {
             if (hasEnglishCompleteSubtitles()) {
-                System.out.println("Approved: English media with WD TV Live compatible English audio and subtitle tracks");
+                printApprovedMessage("English media with WD TV Live compatible English audio and subtitle tracks");
                 result = true;
             } else {
-                System.out.println("Disapproved\nRequirement not met: English media without complete English subtitle track!");
+                printDisapprovedMessage("English media without complete English subtitle track!");
             }
         } else {
-            System.out.println("Disapproved\nRequirement not met: English media without compatible English audio track!");
+            printDisapprovedMessage("English media without compatible English audio track!");
         }
         return result;
     }
@@ -335,16 +335,23 @@ public class MediaFile {
         boolean result = false;
         String language = mediaInfo.getOriginalLanguageName();
         if (hasWdTvCompatibleSpanishAudioTrack()) {
-            System.out.println("Approved: " + language + " media dubbed into Spanish");
+            printApprovedMessage(language + " media with WD TV Live compatible Spanish audio track");
             result = true;
         } else if (hasWdTvCompatibleEnglishAudioTrack() && hasEnglishCompleteSubtitles()) {
-            System.out.println("Approved: " + language + " media dubbed into English with complete English subtitles");
+            printApprovedMessage(language + " media with WD TV Live compatible English audio and subtitle tracks");
             result = true;
         } else {
-            System.out.println("Disapproved\nRequirement not met: " + language + " media not dubbed neither into "
-                    + "Spanish nor into English with subtitles!");
+            printDisapprovedMessage(language + " media without compatible Spanish audio track nor English audio/subtitle track pair!");
         }
         return result;
+    }
+
+    private void printApprovedMessage(String message) {
+        System.out.println("Approved\n  > " + message);
+    }
+
+    private void printDisapprovedMessage(String message) {
+        System.out.println("Disapproved\n  > " + message);
     }
 
     public boolean meetsReleaseInfoRequirements() {

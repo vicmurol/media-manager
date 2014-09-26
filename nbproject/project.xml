@@ -41,6 +41,7 @@
             <word>subfolders</word>
             <word>txt</word>
             <word>uploader</word>
+            <word>WD</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

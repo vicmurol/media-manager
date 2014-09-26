@@ -442,7 +442,7 @@ public class Cataloguer {
 
     private void saveMediaHashFile(File mediaFile, File infoFile) throws IOException {
         Md5FileGenerator generator = new Md5FileGenerator(mediaFile, infoFile);
-        generator.setApplicationName(VersionInfo.getApplicationFullName());
+        generator.setApplicationName(VersionInfo.getApplicationSuiteFullName());
         File outputFile = new File(mediaFile.getParentFile(), FileUtils.getNameWithoutExtension(mediaFile) + "." + MD5_FILE_EXTENSION);
         generator.writeTo(outputFile);
     }

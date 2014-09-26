@@ -14,6 +14,7 @@ import lan.vandiemens.media.AudioFile;
 import lan.vandiemens.media.MediaFile;
 import lan.vandiemens.media.SubtitleFile;
 import lan.vandiemens.media.analysis.MediaInfoException;
+import lan.vandiemens.media.manager.VersionInfo;
 import lan.vandiemens.util.file.DirectoryFilter;
 import lan.vandiemens.util.file.FileExtensionFilter;
 
@@ -58,6 +59,8 @@ public class MatroskaEditor extends MatroskaUtility {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        showVersion();
+
         // Check arguments entered by the user
         if (args.length == 0) {
             showUsage();
@@ -67,18 +70,15 @@ public class MatroskaEditor extends MatroskaUtility {
         // Parse argument list looking for options
         for (int i = 0; i < args.length - 1; i++) {
             switch (args[i]) {
-                case HELP_OPTION:
-                case LONG_HELP_OPTION:
-                    showUsage();
-                    System.exit(0);
-                case VERSION_OPTION:
-                case LONG_VERSION_OPTION:
-                    showVersion();
-                    System.exit(0);
                 case REPLACE_SUBTITLES_OPTION:
                 case LONG_REPLACE_SUBTITLES_OPTION:
                     MatroskaEditor.enableSubtitleSubstitution(true);
                     break;
+                case VERSION_OPTION:
+                case LONG_VERSION_OPTION:
+                    System.exit(0);
+                case HELP_OPTION:
+                case LONG_HELP_OPTION:
                 default:
                     showUsage();
                     System.exit(0);
@@ -122,6 +122,7 @@ public class MatroskaEditor extends MatroskaUtility {
             System.out.println("Media file \"" + mediaFile.getName() + "\" has been discarded!");
             return;
         }
+        printConsoleSeparator();
 
         if (subtitleSubstitutionEnabled) {
             mediaFile.preferExternalSubtitles();
@@ -174,9 +175,7 @@ public class MatroskaEditor extends MatroskaUtility {
     }
 
     private static void showVersion() {
-        String versionNumber = ResourceBundle.getBundle("version").getString("VERSION");
-        String buildNumber = ResourceBundle.getBundle("version").getString("BUILD");
-        System.out.println("MatroskaEditor v" + versionNumber + " Build " + buildNumber);
+        System.out.println(VersionInfo.getMatroskaEditorFullName());
     }
 
     private static MediaFile[] getEditableMediaFiles(File folder) {
@@ -218,7 +217,8 @@ public class MatroskaEditor extends MatroskaUtility {
                 System.out.println("Reason: " + ex.getMessage());
             }
         }
-        printConsoleSeparator();
+        if (audioFiles.size() > 0)
+            printConsoleSeparator();
 
         return audioFiles.toArray(new AudioFile[audioFiles.size()]);
     }
@@ -240,7 +240,8 @@ public class MatroskaEditor extends MatroskaUtility {
                 System.out.println("Reason: " + ex.getMessage());
             }
         }
-        printConsoleSeparator();
+        if (subtitleFiles.size() > 0)
+            printConsoleSeparator();
 
         return subtitleFiles.toArray(new SubtitleFile[subtitleFiles.size()]);
     }
@@ -279,6 +280,7 @@ public class MatroskaEditor extends MatroskaUtility {
                 }
             }
         }
+        printConsoleSeparator();
     }
 
     private static void printResultSummary() {
