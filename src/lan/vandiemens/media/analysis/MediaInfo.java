@@ -373,7 +373,7 @@ public class MediaInfo {
                             } else {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: only Spanish and English audio tracks allowed for English movies");
+                                System.out.println("Reason: only Spanish and English audio tracks allowed for English media");
                             }
                             break;
                         case SPANISH:
@@ -388,7 +388,7 @@ public class MediaInfo {
                             } else {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Only Spanish audio tracks allowed for Spanish movies");
+                                System.out.println("Reason: Only Spanish audio tracks allowed for Spanish media");
                             }
                             break;
                         default:
@@ -397,13 +397,13 @@ public class MediaInfo {
                                 if (++originalLanguageAudioTrackCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one original language audio track is allowed for foreign movies");
+                                    System.out.println("Reason: Only one original language audio track is allowed for non-English foreign media");
                                 }
                             // Disable latin audio for foreign movies
                             } else if (audioTrack.isLatinSpanish()) {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Latin Spanish audio track for foreign movie not needed");
+                                System.out.println("Reason: Latin Spanish audio track for non-English foreign media not needed");
                             // Only allow the first Spanish audio track, disable the rest
                             } else if (audioTrack.isSpanish()) {
                                 if (++spanishAudioTrackCount > 1) {
@@ -415,19 +415,12 @@ public class MediaInfo {
                             } else {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Only Spanish and original language audio tracks allowed for foreign movies");
+                                System.out.println("Reason: Only Spanish and original language audio tracks allowed for non-English foreign media");
                             }
                     }
                     break;
                 case SUBTITLE:
                     SubtitleTrack subtitleTrack = (SubtitleTrack) tracks[i];
-                    // Disable non-text subtitles for WD TV Live compatibility (deprecated)
-//                    if (!subtitleTrack.isTextBased()) {
-//                        tracks[i].disable();
-//                        System.out.println("Track #" + i + " disabled: " + tracks[i]);
-//                        System.out.println("Reason:  Only text subtitles allowed");
-//                        continue;
-//                    }
                     switch (originalLanguage) {
                         case ENGLISH:
                             // Only allow the first English complete subtitle, disable the rest
@@ -435,27 +428,32 @@ public class MediaInfo {
                                 if (++englishCompleteSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one English complete subtitle track is allowed for English movies");
+                                    System.out.println("Reason: Only one English complete subtitle track is allowed for English media");
                                 }
+                            // Disable Latin Spanish subtitles for English media
+                            } else if (subtitleTrack.isLatinSpanish()) {
+                                tracks[i].disable();
+                                System.out.println("Track #" + i + " disabled: " + tracks[i]);
+                                System.out.println("Reason: Latin Spanish subtitle track for English media not needed");
                             // Only allow the first Spanish complete subtitle, disable the rest
                             } else if (subtitleTrack.isSpanish() && subtitleTrack.isComplete()) {
                                 if (++spanishCompleteSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one Spanish complete subtitle track is allowed for English movies");
+                                    System.out.println("Reason: Only one Spanish complete subtitle track is allowed for English media");
                                 }
                             // Only allow the first Spanish forced subtitle, disable the rest
                             } else if (subtitleTrack.isSpanish() && subtitleTrack.isForced()) {
                                 if (++spanishForcedSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for English movies");
+                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for English media");
                                 }
                             // Disable all non-English and non-Spanish subtitles for English movies
                             } else {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Only Spanish and complete English subtitles allowed for English movies");
+                                System.out.println("Reason: Only Spanish and complete English subtitles allowed for English media");
                             }
                             break;
                         case SPANISH:
@@ -464,13 +462,13 @@ public class MediaInfo {
                                 if (++spanishForcedSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for Spanish movies");
+                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for Spanish media");
                                 }
                             // Disable the remaining subtitles for Spanish movies
                             } else {
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Only Spanish forced subtitles allowed for Spanish movies");
+                                System.out.println("Reason: Only Spanish forced subtitles allowed for Spanish media");
                             }
                             break;
                         default: // Non-English foreign language
@@ -478,26 +476,26 @@ public class MediaInfo {
                                 if (++spanishCompleteSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one Spanish complete subtitle track is allowed for non-English foreign movies");
+                                    System.out.println("Reason: Only one Spanish complete subtitle track is allowed for non-English foreign media");
                                 }
                             // Only allow the first Spanish forced subtitle, disable the rest
                             } else if (subtitleTrack.isSpanish() && subtitleTrack.isForced()) {
                                 if (++spanishForcedSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for non-English foreign movies");
+                                    System.out.println("Reason: Only one Spanish forced subtitle track is allowed for non-English foreign media");
                                 }
                             // Only allow the first English complete subtitle, disable the rest
                             } else if (subtitleTrack.isEnglish() && subtitleTrack.isComplete()) {
                                 if (++englishCompleteSubtitleCount > 1) {
                                     tracks[i].disable();
                                     System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                    System.out.println("Reason: Only one English complete subtitle track is allowed for non-English foreign movies");
+                                    System.out.println("Reason: Only one English complete subtitle track is allowed for non-English foreign media");
                                 }
                             } else { // Disable the remaining subtitles for non-English foreign movies
                                 tracks[i].disable();
                                 System.out.println("Track #" + i + " disabled: " + tracks[i]);
-                                System.out.println("Reason: Only Spanish and English subtitles allowed for non-english foreign movies");
+                                System.out.println("Reason: Only Spanish and English subtitles allowed for non-English foreign media");
                             }
                     }
                     break;
@@ -522,7 +520,6 @@ public class MediaInfo {
     private boolean hasDisabledTracks() {
         for (Track track : tracks) {
             if (!track.isEnabled()) {
-                System.out.println("Track disabled: TID=" + track.getTrackId());
                 return true;
             }
         }
@@ -561,7 +558,7 @@ public class MediaInfo {
      * NOTE: The order depends on the original language of the media content.
      */
     public void rearrange() {
-        System.out.println("Rearranging tracks...");
+        System.out.print("\nRearranging tracks... ");
         Comparator<Track> trackComparator;
         switch (originalLanguage) {
             case SPANISH:
@@ -575,8 +572,10 @@ public class MediaInfo {
         }
         TreeSet<Track> trackSet = new TreeSet<>(trackComparator);
         trackSet.addAll(Arrays.asList(tracks));
+        String before = "  > Before:\n    " + Arrays.toString(tracks);
         tracks = trackSet.toArray(new Track[trackSet.size()]);
-        System.out.println("> Rearrangement has finished"); // TO-DO Show if there has been a rearrangement or not
+        String after = "  > After:\n    " + Arrays.toString(tracks);
+        System.out.println("Done\n" + before + "\n" + after); // TO-DO Show if there has been a rearrangement or not
     }
 
     /**
